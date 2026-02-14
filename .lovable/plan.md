@@ -1,58 +1,45 @@
 
-# Mockup em Formato de Celular na Dobra 4
+# Corrigir Bug de Scroll e Fixar Tamanho do Celular
 
-## Resumo
-Envolver o mockup do chat simulado dentro de um frame visual de smartphone, dando a aparencia de um celular real exibindo o aplicativo. A interacao animada (conversa, typing dots, builder nodes) permanece identica -- apenas o container externo muda.
+## Problema
+O `scrollIntoView` na linha 116 faz o **navegador inteiro** rolar para baixo toda vez que uma nova mensagem aparece, porque ele move o viewport do documento para o elemento referenciado.
 
----
+## Correcoes
 
-## O que muda
+### 1. Remover `scrollIntoView` e usar scroll interno
+- Substituir `chatEndRef.current?.scrollIntoView(...)` por `chatEndRef.current?.parentElement?.scrollTo(...)` ou simplesmente setar `scrollTop` do container de mensagens
+- Isso garante que apenas o container interno de chat rola, nao a pagina inteira
 
-### Frame de celular ao redor do mockup
-O componente `MockupBuilder` sera envolvido por um container estilizado como um smartphone:
-
-- **Moldura externa**: borda arredondada grossa (~3px) cinza escuro, aspect-ratio de celular (~9:19), com cantos bem arredondados (`rounded-[2.5rem]`)
-- **Notch/barra de status**: pequena barra no topo com hora, icones de sinal/wifi/bateria simulados (texto estatico)
-- **Barra inferior**: linha horizontal fina simulando o indicador home do iPhone
-- **Sombra e glow**: sombra externa + glow sutil roxo ao redor do dispositivo
-
-### Conteudo interno inalterado
-- Barra "Bot Ativo", builder nodes e chat animado permanecem exatamente como estao
-- Apenas ficam "dentro" do frame do celular
-- Altura fixa do dispositivo para manter proporcao realista
-
-### Responsividade
-- No mobile real, o celular mockup sera menor (max-w ajustado) para caber na tela
-- No desktop, tamanho confortavel (~280px de largura)
-
----
+### 2. Tamanho fixo do celular
+- Adicionar altura fixa ao frame do smartphone: `h-[560px]` (proporcao realista 9:19 para largura de 280px)
+- A area de chat interna tera `overflow-y-auto` com altura limitada pelo container pai, em vez de `overflow-hidden`
+- O container de mensagens usara `flex flex-col justify-end` para manter mensagens alinhadas na parte inferior
 
 ## Detalhes Tecnicos
 
-### Arquivo modificado
-- `src/components/landing/ChatbotAISection.tsx`
+### Arquivo: `src/components/landing/ChatbotAISection.tsx`
 
-### Estrutura do frame
-```text
-+---(moldura cinza escuro, rounded-[2.5rem])---+
-|  [ 9:41  ----  sinal wifi bateria ]          |  <- status bar
-|  +----------------------------------------+  |
-|  | [o] Bot Ativo           ● online       |  |  <- titulo app
-|  +----------------------------------------+  |
-|  | [Inicio] --> [Pergunta] --> [IA]       |  |  <- builder nodes
-|  +----------------------------------------+  |
-|  |                                        |  |
-|  |  Cliente: "Qual o preco?"              |  |  <- chat
-|  |  Bot: "R$97, pagamento unico!"         |  |
-|  |  ...                                   |  |
-|  +----------------------------------------+  |
-|              ____                            |  <- home indicator
-+----------------------------------------------+
+**Linha 115-117** -- Substituir o `useEffect` do scroll:
+```tsx
+// De:
+chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
+// Para:
+const container = chatEndRef.current?.parentElement;
+if (container) {
+  container.scrollTop = container.scrollHeight;
+}
 ```
 
-### Implementacao
-- Wrapper `div` com classes: `relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl`
-- Status bar: `div` com textos estaticos (9:41, icones em texto) em `text-[10px] text-white/60`
-- Home indicator: `div` com `w-28 h-1 bg-white/20 rounded-full mx-auto mb-2 mt-3`
-- O `MockupBuilder` atual fica dentro, com seus rounded ajustados para `rounded-xl` (menos arredondado, ja que o frame externo cuida disso)
-- O `animate-glow-pulse` move do MockupBuilder para o frame externo
+**Linha 120** -- Adicionar altura fixa ao frame:
+```tsx
+// De:
+<div className="relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse">
+
+// Para:
+<div className="relative mx-auto w-[280px] h-[560px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse flex flex-col">
+```
+
+**Container interno (motion.div glass)** -- Permitir que ocupe o espaco restante:
+- Adicionar `flex-1 flex flex-col min-h-0` ao motion.div glass
+- A area de chat tera `flex-1 overflow-y-auto` em vez de `max-h-[240px] overflow-hidden`
