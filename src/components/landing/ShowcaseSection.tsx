@@ -16,10 +16,14 @@ import imgWhiteLabel from "@/assets/screenshots/White_Label.png";
 import imgIntegracoes from "@/assets/screenshots/Integracoes.png";
 import imgSetores from "@/assets/screenshots/Setores.png";
 import imgTags from "@/assets/screenshots/Tags.png";
+import imgChatbot from "@/assets/screenshots/Chatbot.png";
+import imgDashboard from "@/assets/screenshots/Dashboard.png";
 
 const screenshots = [
   { src: imgWhatsApp, title: "Atendimento WhatsApp", url: "atendimento", featured: true },
   { src: imgDisparo, title: "Disparo em Massa", url: "campanhas", featured: true },
+  { src: imgDashboard, title: "Dashboard", url: "dashboard" },
+  { src: imgChatbot, title: "Chatbot Builder", url: "chatbot" },
   { src: imgContatos, title: "Gestão de Contatos", url: "contatos" },
   { src: imgConexoes, title: "Conexões WhatsApp", url: "conexoes" },
   { src: imgAgendamento, title: "Agendamentos", url: "agendamentos" },
