@@ -10,7 +10,7 @@ import Footer from "@/components/landing/Footer";
 import FloatingElements from "@/components/landing/FloatingElements";
 
 const Index = () => (
-  <div className="min-h-screen bg-background text-foreground">
+  <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
     <main>
       <HeroSection />
       <ComparisonSection />
