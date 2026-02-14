@@ -117,11 +117,22 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
   }, [visibleMessages, showTyping]);
 
   return (
-    <motion.div
-      className="glass rounded-2xl overflow-hidden animate-glow-pulse"
-      animate={{ opacity: isFadingOut ? 0 : 1 }}
-      transition={{ duration: 0.6 }}
-    >
+    <div className="relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse">
+      {/* Status bar */}
+      <div className="flex justify-between items-center px-5 pt-1.5 pb-2 text-[10px] text-white/60">
+        <span className="font-medium">9:41</span>
+        <div className="flex items-center gap-1.5">
+          <span>●●●●</span>
+          <span>WiFi</span>
+          <span>🔋</span>
+        </div>
+      </div>
+
+      <motion.div
+        className="glass rounded-xl overflow-hidden"
+        animate={{ opacity: isFadingOut ? 0 : 1 }}
+        transition={{ duration: 0.6 }}
+      >
       {/* Title bar */}
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-white/5">
         <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
@@ -203,7 +214,11 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
           <div ref={chatEndRef} />
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+
+      {/* Home indicator */}
+      <div className="w-28 h-1 bg-white/20 rounded-full mx-auto mb-2 mt-3" />
+    </div>
   );
 };
 
