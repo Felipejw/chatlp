@@ -17,25 +17,25 @@ interface Feature {
 
 const features: Feature[] = [
   // AUTOMAÇÃO
-  { icon: Brain, title: "IA Gemini/OpenAI", desc: "Respostas automáticas inteligentes 24/7, mesmo quando você está offline.", category: "automacao", highlighted: true },
+  { icon: Brain, title: "IA Gemini/OpenAI", desc: "Respostas automáticas inteligentes 24/7, mesmo quando sua equipe está offline.", category: "automacao", highlighted: true },
   { icon: Bot, title: "Chatbot Visual", desc: "Crie fluxos automatizados em minutos, sem precisar programar.", category: "automacao", highlighted: true },
   { icon: Send, title: "Disparo em Massa", desc: "Envie campanhas para sua base e gere novas oportunidades de venda.", category: "automacao", highlighted: true },
   { icon: CalendarClock, title: "Agendamentos", desc: "Agende atendimentos e follow-ups sem sair do sistema.", category: "automacao" },
   // GESTÃO
-  { icon: MessageSquare, title: "CRM Integrado", desc: "Organize, acompanhe e feche mais negócios dentro do WhatsApp.", category: "gestao" },
+  { icon: MessageSquare, title: "CRM Integrado", desc: "Organize, acompanhe e feche mais negócios sem sair do WhatsApp.", category: "gestao" },
   { icon: Users, title: "Atendimento Multiusuário", desc: "Vários atendentes trabalhando ao mesmo tempo, sem perder conversas.", category: "gestao" },
   { icon: Building2, title: "Setores", desc: "Direcione conversas para o departamento certo automaticamente.", category: "gestao" },
   { icon: ArrowRightLeft, title: "Transferência", desc: "Transfira atendimentos entre agentes sem perder o histórico.", category: "gestao" },
   { icon: Tags, title: "Tags", desc: "Segmente e organize seus contatos para ações mais inteligentes.", category: "gestao" },
   // CRESCIMENTO
-  { icon: LayoutDashboard, title: "Dashboard", desc: "Visão completa do seu negócio em tempo real, em um só painel.", category: "crescimento" },
+  { icon: LayoutDashboard, title: "Dashboard", desc: "Visão completa do seu atendimento e vendas em tempo real, em um único painel.", category: "crescimento" },
   { icon: BarChart3, title: "Relatórios", desc: "Acompanhe métricas de atendimento e tome decisões com dados.", category: "crescimento" },
   { icon: FileCode, title: "API Docs", desc: "Documentação completa para integrações personalizadas.", category: "crescimento" },
   { icon: Plug, title: "Integrações", desc: "Conecte com as ferramentas que você já usa no dia a dia.", category: "crescimento" },
   { icon: GraduationCap, title: "Tutoriais", desc: "Área de membros com vídeos e guias para dominar o sistema.", category: "crescimento" },
 ];
 
-const categoryConfig: Record<Category, { label: string; color: string; iconColor: string; hoverClasses: string; glowClasses: string; dropShadow: string }> = {
+const categoryConfig: Record<Category, { label: string; color: string; iconColor: string; hoverClasses: string; glowClasses: string; dropShadow: string; lineGradient: string }> = {
   automacao: {
     label: "Automação",
     color: "text-green-400",
@@ -43,6 +43,7 @@ const categoryConfig: Record<Category, { label: string; color: string; iconColor
     hoverClasses: "hover:border-green-500/30 hover:shadow-[0_0_20px_hsl(142_71%_45%/0.2)]",
     glowClasses: "border-green-500/30 shadow-[0_0_20px_hsl(142_71%_45%/0.25)]",
     dropShadow: "drop-shadow-[0_0_6px_hsl(142_71%_45%/0.5)]",
+    lineGradient: "from-green-500/30 to-transparent",
   },
   gestao: {
     label: "Gestão",
@@ -51,6 +52,7 @@ const categoryConfig: Record<Category, { label: string; color: string; iconColor
     hoverClasses: "hover:border-blue-500/30 hover:shadow-[0_0_20px_hsl(217_91%_60%/0.2)]",
     glowClasses: "border-blue-500/30 shadow-[0_0_20px_hsl(217_91%_60%/0.25)]",
     dropShadow: "drop-shadow-[0_0_6px_hsl(217_91%_60%/0.5)]",
+    lineGradient: "from-blue-500/30 to-transparent",
   },
   crescimento: {
     label: "Crescimento",
@@ -59,6 +61,7 @@ const categoryConfig: Record<Category, { label: string; color: string; iconColor
     hoverClasses: "hover:border-purple-500/30 hover:shadow-[0_0_20px_hsl(270_70%_60%/0.2)]",
     glowClasses: "border-purple-500/30 shadow-[0_0_20px_hsl(270_70%_60%/0.25)]",
     dropShadow: "drop-shadow-[0_0_6px_hsl(270_70%_60%/0.5)]",
+    lineGradient: "from-purple-500/30 to-transparent",
   },
 };
 
@@ -81,9 +84,12 @@ const FeaturesGrid = () => (
           const items = features.filter((f) => f.category === cat);
           return (
             <div key={cat}>
-              <span className={`text-xs font-bold uppercase tracking-wider ${config.color} mb-5 block`}>
-                {config.label}
-              </span>
+              <div className="flex items-center gap-3 mb-5">
+                <span className={`text-sm font-bold uppercase tracking-wider ${config.color} whitespace-nowrap`}>
+                  {config.label}
+                </span>
+                <div className={`h-px flex-1 bg-gradient-to-r ${config.lineGradient}`} />
+              </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {items.map((f, i) => (
                   <motion.div
@@ -100,11 +106,11 @@ const FeaturesGrid = () => (
                   >
                     <f.icon
                       className={`${config.iconColor} ${config.dropShadow} mb-3 group-hover:scale-110 transition-transform ${
-                        f.highlighted ? "w-10 h-10" : "w-9 h-9"
+                        f.highlighted ? "w-11 h-11" : "w-10 h-10"
                       }`}
                     />
-                    <h3 className="font-display font-semibold text-sm mb-1">{f.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+                    <h3 className="font-display font-semibold text-base text-white mb-1">{f.title}</h3>
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed">{f.desc}</p>
                   </motion.div>
                 ))}
               </div>
