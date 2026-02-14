@@ -113,11 +113,14 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
   }, [isInView, startSequence, clearAllTimeouts]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = chatEndRef.current?.parentElement;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [visibleMessages, showTyping]);
 
   return (
-    <div className="relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse">
+    <div className="relative mx-auto w-[280px] h-[560px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse flex flex-col">
       {/* Status bar */}
       <div className="flex justify-between items-center px-5 pt-1.5 pb-2 text-[10px] text-white/60">
         <span className="font-medium">9:41</span>
@@ -129,7 +132,7 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
       </div>
 
       <motion.div
-        className="glass rounded-xl overflow-hidden"
+        className="glass rounded-xl overflow-hidden flex-1 flex flex-col min-h-0"
         animate={{ opacity: isFadingOut ? 0 : 1 }}
         transition={{ duration: 0.6 }}
       >
@@ -170,7 +173,7 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
       </div>
 
       {/* Chat simulation */}
-      <div className="max-h-[240px] overflow-hidden">
+      <div className="flex-1 overflow-y-auto">
         <div className="px-4 py-4 space-y-3">
           <AnimatePresence mode="popLayout">
             {visibleMessages.map((msgIndex) => {
