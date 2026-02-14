@@ -17,7 +17,7 @@ const metrics = [
 ];
 
 const HeroSection = () => (
-  <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden noise-bg">
+  <section className="relative pt-16 pb-12 md:pt-20 md:pb-16 overflow-hidden noise-bg">
     {/* Background effects */}
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-blue-500/15 blur-[180px]" />
