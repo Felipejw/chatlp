@@ -1,57 +1,60 @@
 
 
-# Ajustes Finos na Dobra 3 (Features Grid)
+# Otimizacao Mobile
 
 ## Resumo
-Aplicar refinamentos visuais e de copy na secao de funcionalidades para aumentar a presenca dos titulos de categoria, melhorar contraste dos textos e afiar a copy.
+Melhorar a experiencia mobile com carrossel horizontal por categoria na dobra de Features e barra de acesso rapido no rodape fixo.
 
 ---
 
 ## Mudancas
 
-### 1. Titulos de Categoria com Mais Destaque
-- Aumentar fonte de `text-xs` para `text-sm`
-- Adicionar linha horizontal ao lado do texto (usando flex + hr/divider com cor da categoria)
-- Layout: texto a esquerda + linha que preenche o restante da largura
-- Resultado visual: "AUTOMACAO ————————————————"
+### 1. Feature Cards com Carrossel Horizontal no Mobile
+Na dobra 3 (FeaturesGrid), no mobile cada categoria vira um carrossel horizontal swipeable:
+- Cards com largura de ~85% da tela para mostrar parcialmente o proximo (efeito "peek")
+- Dots de navegacao abaixo de cada carrossel
+- No desktop, o grid atual permanece inalterado
+- Usa `embla-carousel-react` (ja instalado no projeto)
 
-### 2. Icones 10% Maiores
-- Cards normais: de `w-9 h-9` para `w-10 h-10`
-- Cards destacados: de `w-10 h-10` para `w-11 h-11`
+### 2. Barra de Acesso Rapido no Mobile
+Expandir a barra inferior fixa para incluir mini-navegacao alem do botao CTA:
 
-### 3. Mais Contraste nos Textos Secundarios
-- Descricoes: de `text-xs text-muted-foreground` para `text-sm text-muted-foreground/80`
-- Titulos dos cards: de `text-sm` para `text-base` com `text-white`
+```text
++---------------------------------------------------+
+| [Recursos] [Demo] [FAQ]  |  Comprar por R$97      |
++---------------------------------------------------+
+```
 
-### 4. Ajustes de Copy
-- **IA Gemini/OpenAI:** "...mesmo quando **sua equipe** esta offline." (em vez de "voce")
-- **CRM Integrado:** "...sem sair do WhatsApp." (em vez de "dentro do WhatsApp")
-- **Dashboard:** "Visao completa do seu atendimento e vendas em tempo real, em um unico painel."
+- 3 icones pequenos com label de 10px para scroll rapido ate as secoes (#features, #showcase, #faq)
+- Botao CTA ocupa ~50% da largura
+- Smooth scroll ao tocar nos icones
+
+### 3. Showcase com Swipe no Mobile
+Os 4 cards da ShowcaseSection viram carrossel horizontal no mobile com swipe e dots, em vez de grid 2x2.
 
 ---
 
 ## Detalhes Tecnicos
 
-**Arquivo:** `src/components/landing/FeaturesGrid.tsx`
+### FeaturesGrid.tsx
+- Importar `useIsMobile` de `@/hooks/use-mobile`
+- Importar `useEmblaCarousel` de `embla-carousel-react`
+- Condicional: no mobile, renderizar cards dentro de container embla horizontal; no desktop, manter grid
+- Cada card no carrossel com `min-w-[85%]` e `snap-center`
+- Componente de dots usando `emblaApi.scrollSnapList()` e `emblaApi.selectedScrollSnap()`
 
-**Titulo de categoria** -- substituir o `<span>` simples por um flex container:
-```
-<div className="flex items-center gap-3 mb-5">
-  <span className="text-sm font-bold uppercase tracking-wider {config.color} whitespace-nowrap">
-    {config.label}
-  </span>
-  <div className="h-px flex-1 bg-gradient-to-r from-{cor}/30 to-transparent" />
-</div>
-```
-A cor do gradiente sera dinamica por categoria (green, blue, purple) -- definida no `categoryConfig`.
+### FloatingElements.tsx
+- Reorganizar layout da barra inferior mobile com `flex`
+- Lado esquerdo: 3 botoes icone+label (LayoutDashboard, Monitor, HelpCircle) que fazem `document.querySelector(id).scrollIntoView({ behavior: 'smooth' })`
+- Lado direito: botao CTA compacto
+- Importar icones de lucide-react
 
-**Icones** -- ajustar tamanhos:
-- Normal: `w-10 h-10`
-- Highlighted: `w-11 h-11`
+### ShowcaseSection.tsx
+- No mobile: usar embla-carousel para os 4 cards com swipe horizontal e dots
+- No desktop: manter grid sm:grid-cols-2 inalterado
 
-**Textos** -- ajustar classes:
-- Titulo do card: `text-base font-semibold text-white`
-- Descricao: `text-sm text-muted-foreground/80 leading-relaxed`
-
-**Copy** -- atualizar 3 strings no array `features`.
+### Arquivos modificados
+- `src/components/landing/FeaturesGrid.tsx`
+- `src/components/landing/FloatingElements.tsx`
+- `src/components/landing/ShowcaseSection.tsx`
 
