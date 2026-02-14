@@ -88,8 +88,8 @@ const OfferSection = () => {
           {/* Pricing */}
           <div className="text-center mb-6">
             <p className="text-muted-foreground line-through text-lg">De R$197,00</p>
-            <p className="text-5xl font-bold text-green-500 mt-1">
-              R$97<span className="text-2xl align-super">,00</span>
+            <p className="text-6xl md:text-7xl font-bold text-green-500 mt-1">
+              R$97<span className="text-3xl align-super">,00</span>
             </p>
           </div>
 
