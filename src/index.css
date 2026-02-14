@@ -99,4 +99,12 @@
     mask-composite: exclude;
     pointer-events: none;
   }
+
+  .glow-green {
+    box-shadow: 0 0 30px hsl(142 71% 45% / 0.4), 0 0 60px hsl(142 71% 45% / 0.15);
+  }
+
+  .glow-green-sm {
+    box-shadow: 0 0 15px hsl(142 71% 45% / 0.3), 0 0 30px hsl(142 71% 45% / 0.1);
+  }
 }

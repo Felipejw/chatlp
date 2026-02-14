@@ -15,7 +15,7 @@ const FloatingElements = () => (
 
     {/* Mobile fixed bottom bar */}
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden glass border-t border-white/5 p-3">
-      <Button asChild className="w-full glow-primary bg-primary hover:bg-primary/90 font-bold">
+      <Button asChild className="w-full glow-green bg-green-500 hover:bg-green-600 font-bold text-white">
         <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
           Comprar Agora por R$97
         </a>
