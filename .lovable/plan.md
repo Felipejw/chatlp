@@ -1,91 +1,101 @@
 
-
-# Nova Dobra: Oferta com Countdown Timer
+# Ajustes Estrategicos na Dobra 7 (OfferSection)
 
 ## Resumo
-Criar uma secao de oferta/pricing entre Depoimentos e FAQ, inspirada no print de referencia. Inclui titulo forte, subtitulo, countdown timer, checklist de funcionalidades, preco com ancora e CTA verde.
+Aplicar melhorias de copy, hierarquia, credibilidade e conversao na secao de oferta, seguindo as recomendacoes estrategicas fornecidas.
 
-## Estrutura Visual
+## Mudancas
+
+### 1. Headline mais decisiva
+**De:** "A automacao mais completa do WhatsApp / por um unico pagamento"
+**Para:** "Hoje voce paga R$97 / e elimina mensalidades para sempre"
+
+Subtitulo verde: "Outras plataformas cobram R$200/mes. Aqui voce paga uma unica vez."
+
+### 2. Reordenar lista de features (diferenciais primeiro)
+Nova ordem:
+1. Pagamento unico vitalicio (com destaque visual - texto bold ou cor diferente)
+2. WhatsApps ilimitados
+3. Atendentes ilimitados e crie setores
+4. Chatbot com I.A. Inclusa (Sem Custo Extra)
+5. Integracao com Instagram e Facebook
+6. Disparo em Massa para sua lista de contatos
+7. Agendamento de Mensagens
+8. Dashboard de Atendimento em tempo real
+9. API e Integracoes (Typebot, Dialogflow, etc)
+
+Os 3 primeiros itens terao texto em `font-semibold` para destaque.
+
+### 3. Ajustar escassez (mais credivel)
+**De:** "Oferta disponivel somente hoje!" (agressivo/artificial)
+**Para:** "Preco promocional por tempo limitado" (credivel)
+
+### 4. Preco mais proximo do botao + comparacao de mercado
+Reordenar o card: Features → Escassez → Comparacao de mercado → Preco → Garantia → Social proof → CTA
+
+Adicionar linha de comparacao acima do preco:
+"Plataformas similares: a partir de R$200/mes" (texto pequeno, muted)
+
+### 5. Selo de garantia colado no botao
+Adicionar logo acima do CTA:
+Icone de escudo + "Garantia incondicional de 7 dias" com estilo badge/pill
+
+### 6. Social proof antes do botao
+Adicionar frase logo antes do botao:
+"Mais de 100 empresas ja utilizam. Garanta seu acesso agora."
+
+### 7. Remover aviso amarelo generico
+Substituir o "Esse preco pode mudar a qualquer momento" pelo reforco de social proof e garantia (menos agressivo, mais persuasivo).
+
+## Estrutura Final do Card
 
 ```text
-+----------------------------------------------------------+
-|  [icone] A automacao mais completa do WhatsApp            |
-|          por um unico pagamento                           |
-|                                                          |
-|  [check] Subtitulo descritivo                            |
-|                                                          |
-|  +----------------------------------------------------+  |
-|  |                                                    |  |
-|  |  +----------------------------------------------+  |  |
-|  |  |  [timer] Oferta disponivel somente hoje!     |  |  |
-|  |  |          00 : 03 : 34                        |  |  |
-|  |  +----------------------------------------------+  |  |
-|  |                                                    |  |
-|  |  [v] Gerencie +100 Numeros de WhatsApp            |  |
-|  |  [v] Chatbot com I.A. Inclusa (Sem Custo Extra)   |  |
-|  |  [v] Integracao com Instagram e Facebook          |  |
-|  |  [v] Disparo em Massa para sua lista de contatos  |  |
-|  |  [v] Adicione +100 Atendentes e crie setores      |  |
-|  |  [v] Agendamento de Mensagens                     |  |
-|  |  [v] Dashboard de Atendimento em tempo real       |  |
-|  |  [v] API e Integracoes (Typebot, Dialogflow, etc) |  |
-|  |  [v] Acesso Vitalicio e Atualizacoes Gratuitas    |  |
-|  |                                                    |  |
-|  |  Aviso de urgencia sobre preco                     |  |
-|  |                                                    |  |
-|  |  De R$197,00  (riscado)                           |  |
-|  |  R$97,00      (grande, verde)                     |  |
-|  |                                                    |  |
-|  |  [check] Pagamento unico, sem mensalidade.        |  |
-|  |                                                    |  |
-|  |  [ Comprar Agora por R$97 ]  (botao verde glow)   |  |
-|  +----------------------------------------------------+  |
-+----------------------------------------------------------+
++----------------------------------------------------+
+|  [timer] Preco promocional por tempo limitado      |
+|          04 : 32                                   |
++----------------------------------------------------+
+
+[v] **Pagamento unico vitalicio**
+[v] **WhatsApps ilimitados**
+[v] **Atendentes ilimitados e crie setores**
+[v] Chatbot com I.A. Inclusa (Sem Custo Extra)
+[v] Integracao com Instagram e Facebook
+[v] Disparo em Massa
+[v] Agendamento de Mensagens
+[v] Dashboard em tempo real
+[v] API e Integracoes
+
+Plataformas similares: a partir de R$200/mes
+De R$197,00  (riscado)
+R$97,00      (grande, verde)
+
+[check] Pagamento unico, sem mensalidade.
+[escudo] Garantia incondicional de 7 dias
+
+Mais de 100 empresas ja utilizam.
+
+[ Comprar Agora por R$97 ]
 ```
 
 ## Detalhes Tecnicos
 
-### Novo arquivo
+### Arquivo modificado
 - `src/components/landing/OfferSection.tsx`
 
-### Countdown Timer
-- Estado com `useState` + `useEffect` com `setInterval` de 1 segundo
-- Inicia em um tempo fixo (ex: 5 minutos) e decrementa
-- Exibe `HH:MM:SS` formatado com `padStart(2, '0')`
-- Borda verde pontilhada ao redor do bloco do timer
-- Icone `Clock` do Lucide
+### Importacoes
+- Adicionar `ShieldCheck` do Lucide (para icone de garantia)
+- Manter imports existentes
 
-### Checklist
-- Array de strings com as 9 funcionalidades do print
-- Cada item com icone `CheckSquare` ou `SquareCheck` verde (cor `text-green-500`)
-- Texto em `text-sm` ou `text-base`
+### Features array
+- Reordenar itens e adicionar campo `highlight: boolean` nos 3 primeiros (ou usar indice < 3 para aplicar `font-semibold`)
 
-### Preco
-- Preco antigo `R$197,00` com `line-through text-muted-foreground`
-- Preco atual `R$97,00` em `text-5xl font-bold text-green-500`
-- Centavos em `text-2xl` sobrescrito
+### Garantia
+- Badge com `ShieldCheck` + texto, estilo `border border-primary/30 rounded-full px-4 py-1.5`
+- Posicionado entre preco e botao
 
-### Card central
-- Fundo claro levemente diferente: `bg-white/5` ou `glass` com borda sutil
-- `rounded-2xl`, `max-w-2xl mx-auto`, `p-8`
+### Social proof
+- Texto `text-sm text-muted-foreground` centralizado, logo acima do CTA
 
-### Secao externa
-- Fundo com gradiente sutil ou `noise-bg`
-- Titulo com icone decorativo (ex: `Bot` do Lucide)
-- Subtitulo com icone `CheckCircle`
-
-### CTA
-- Botao verde full-width dentro do card: `glow-green bg-green-500`
-- Icone `ShoppingCart` antes do texto
-- Link para `https://chatbotwhatsapp.store/`
-
-### Badge "Pagamento unico"
-- Pill/badge com icone `CheckCircle` e texto "Pagamento unico, sem mensalidade."
-- Estilo: `border border-green-500/30 rounded-full px-4 py-1 text-sm`
-
-### Animacoes
-- `motion.div` com `whileInView` fade-in para o bloco inteiro
-
-### Integracao
-- Importar em `Index.tsx` entre `TestimonialsSection` e `FAQSection`
-
+### Mobile
+- Preco e botao ja ficam visiveis sem muito scroll (card compacto)
+- Botao com `py-6 text-lg` (ja existente, manter)
