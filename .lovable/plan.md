@@ -1,77 +1,91 @@
 
 
-# Dobra 6 - Depoimentos Premium com Hierarquia e Copy Forte
+# Nova Dobra: Oferta com Countdown Timer
 
 ## Resumo
-Transformar a secao de depoimentos de 3 cards iguais para um layout com hierarquia visual: 1 depoimento destaque (economia) + 2 menores. Copy mais forte e especifica. Carrossel horizontal no mobile.
+Criar uma secao de oferta/pricing entre Depoimentos e FAQ, inspirada no print de referencia. Inclui titulo forte, subtitulo, countdown timer, checklist de funcionalidades, preco com ancora e CTA verde.
 
-## O que muda
-
-### 1. Copy atualizada
-
-**Titulo da secao**: "Quem usa, recomenda" (mantido - ja e bom)
-
-**Depoimento 1 (DESTAQUE)**:
-- "Eu pagava R$297 por mes em outra plataforma. Hoje paguei R$97 uma unica vez e economizei mais de R$3.000 no ano. Tenho controle total do meu atendimento."
-
-**Depoimento 2**:
-- "A IA resolve cerca de 80% das duvidas sozinha. Nosso tempo de resposta caiu de 15 minutos para poucos segundos. Os pacientes adoram o atendimento rapido."
-
-**Depoimento 3**:
-- "Instalei como White Label para meus clientes e ja recuperei o investimento nas primeiras semanas. Melhor decisao que tomei pro meu negocio."
-
-### 2. Layout com hierarquia (Desktop)
+## Estrutura Visual
 
 ```text
-+--------------------------------------------------+
-|                                                  |
-|        DEPOIMENTO 1 - GRANDE (destaque)          |
-|        glow-primary, texto maior, avatar maior   |
-|                                                  |
-+--------------------------------------------------+
-
-    +---------------------+  +---------------------+
-    |  DEPOIMENTO 2       |  |  DEPOIMENTO 3       |
-    |  tamanho normal     |  |  tamanho normal      |
-    +---------------------+  +---------------------+
++----------------------------------------------------------+
+|  [icone] A automacao mais completa do WhatsApp            |
+|          por um unico pagamento                           |
+|                                                          |
+|  [check] Subtitulo descritivo                            |
+|                                                          |
+|  +----------------------------------------------------+  |
+|  |                                                    |  |
+|  |  +----------------------------------------------+  |  |
+|  |  |  [timer] Oferta disponivel somente hoje!     |  |  |
+|  |  |          00 : 03 : 34                        |  |  |
+|  |  +----------------------------------------------+  |  |
+|  |                                                    |  |
+|  |  [v] Gerencie +100 Numeros de WhatsApp            |  |
+|  |  [v] Chatbot com I.A. Inclusa (Sem Custo Extra)   |  |
+|  |  [v] Integracao com Instagram e Facebook          |  |
+|  |  [v] Disparo em Massa para sua lista de contatos  |  |
+|  |  [v] Adicione +100 Atendentes e crie setores      |  |
+|  |  [v] Agendamento de Mensagens                     |  |
+|  |  [v] Dashboard de Atendimento em tempo real       |  |
+|  |  [v] API e Integracoes (Typebot, Dialogflow, etc) |  |
+|  |  [v] Acesso Vitalicio e Atualizacoes Gratuitas    |  |
+|  |                                                    |  |
+|  |  Aviso de urgencia sobre preco                     |  |
+|  |                                                    |  |
+|  |  De R$197,00  (riscado)                           |  |
+|  |  R$97,00      (grande, verde)                     |  |
+|  |                                                    |  |
+|  |  [check] Pagamento unico, sem mensalidade.        |  |
+|  |                                                    |  |
+|  |  [ Comprar Agora por R$97 ]  (botao verde glow)   |  |
+|  +----------------------------------------------------+  |
++----------------------------------------------------------+
 ```
-
-- Depoimento 1: `col-span-full`, padding maior (`p-8`), texto maior (`text-base`), avatar maior (`w-14 h-14`), borda com gradient e `glow-primary-sm` permanente, badge "Mais popular" ou icone de aspas decorativo
-- Depoimentos 2 e 3: `grid-cols-2`, estilo atual com `glass` e hover glow
-
-### 3. Elementos visuais adicionais
-- Icone de aspas decorativo (`"`) grande e semi-transparente no canto superior direito do card destaque
-- Badge ou tag sutil no card principal (ex: destaque com borda gradient)
-- Avatares com anel colorido (borda `ring-2 ring-primary/50`) no destaque
-
-### 4. Mobile
-- Carrossel horizontal com Embla (1 depoimento por vez, swipe)
-- Card destaque aparece primeiro
-- Dots indicadores abaixo
-- CTA logo depois
 
 ## Detalhes Tecnicos
 
-### Arquivo modificado
-- `src/components/landing/TestimonialsSection.tsx`
+### Novo arquivo
+- `src/components/landing/OfferSection.tsx`
 
-### Estrutura de dados
-- Adicionar campo `featured: true` ao primeiro depoimento no array
-- Renderizacao condicional de estilos baseada no campo `featured`
+### Countdown Timer
+- Estado com `useState` + `useEffect` com `setInterval` de 1 segundo
+- Inicia em um tempo fixo (ex: 5 minutos) e decrementa
+- Exibe `HH:MM:SS` formatado com `padStart(2, '0')`
+- Borda verde pontilhada ao redor do bloco do timer
+- Icone `Clock` do Lucide
 
-### Desktop
-- Container `max-w-4xl mx-auto`
-- Card featured: `glass-strong` + `gradient-border` + `glow-primary-sm` permanente, `p-8`, texto `text-base`, avatar `w-14 h-14`
-- Aspas decorativas: pseudo-elemento ou `<span>` com `text-6xl opacity-10 absolute top-4 right-6`
-- Cards normais: grid `grid-cols-2 gap-6 mt-6`
+### Checklist
+- Array de strings com as 9 funcionalidades do print
+- Cada item com icone `CheckSquare` ou `SquareCheck` verde (cor `text-green-500`)
+- Texto em `text-sm` ou `text-base`
 
-### Mobile
-- Importar Embla (`useEmblaCarousel`)
-- Cards com `flex-[0_0_85%]` para mostrar peek do proximo
-- Dots indicator (circulos pequenos, ativo = `bg-primary`, inativo = `bg-white/20`)
-- Breakpoint: `md:` para alternar entre carrossel e grid
+### Preco
+- Preco antigo `R$197,00` com `line-through text-muted-foreground`
+- Preco atual `R$97,00` em `text-5xl font-bold text-green-500`
+- Centavos em `text-2xl` sobrescrito
+
+### Card central
+- Fundo claro levemente diferente: `bg-white/5` ou `glass` com borda sutil
+- `rounded-2xl`, `max-w-2xl mx-auto`, `p-8`
+
+### Secao externa
+- Fundo com gradiente sutil ou `noise-bg`
+- Titulo com icone decorativo (ex: `Bot` do Lucide)
+- Subtitulo com icone `CheckCircle`
+
+### CTA
+- Botao verde full-width dentro do card: `glow-green bg-green-500`
+- Icone `ShoppingCart` antes do texto
+- Link para `https://chatbotwhatsapp.store/`
+
+### Badge "Pagamento unico"
+- Pill/badge com icone `CheckCircle` e texto "Pagamento unico, sem mensalidade."
+- Estilo: `border border-green-500/30 rounded-full px-4 py-1 text-sm`
 
 ### Animacoes
-- Manter `motion.div` com `whileInView` fade-in existente
-- Card featured com delay 0, cards normais com delay 0.1 e 0.2
+- `motion.div` com `whileInView` fade-in para o bloco inteiro
+
+### Integracao
+- Importar em `Index.tsx` entre `TestimonialsSection` e `FAQSection`
 
