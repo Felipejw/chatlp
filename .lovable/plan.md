@@ -1,36 +1,29 @@
 
-# Chat Simulado Estilo Video na Dobra 4
+# Mockup em Formato de Celular na Dobra 4
 
 ## Resumo
-Expandir a conversa animada atual do mockup para uma sequencia mais longa e realista, com multiplas trocas de mensagens aparecendo automaticamente em loop -- como se fosse um video de demonstracao do produto rodando.
+Envolver o mockup do chat simulado dentro de um frame visual de smartphone, dando a aparencia de um celular real exibindo o aplicativo. A interacao animada (conversa, typing dots, builder nodes) permanece identica -- apenas o container externo muda.
 
 ---
 
 ## O que muda
 
-### Conversa longa e sequencial
-Em vez de apenas 1 pergunta + 1 resposta, o mockup vai exibir uma conversa completa com **5-6 trocas de mensagens** que aparecem uma a uma com delays naturais:
+### Frame de celular ao redor do mockup
+O componente `MockupBuilder` sera envolvido por um container estilizado como um smartphone:
 
-1. **Bot:** "Ola! Bem-vindo ao nosso atendimento. Como posso ajudar?"
-2. **Cliente:** "Qual o preco do plano?"
-3. *(digitando...)* **Bot:** "O acesso completo custa R$97 -- pagamento unico, sem mensalidade!"
-4. **Cliente:** "Tem suporte incluso?"
-5. *(digitando...)* **Bot:** "Sim! Suporte por WhatsApp e atualizacoes gratuitas por 1 ano."
-6. **Cliente:** "Quero comprar!"
-7. *(digitando...)* **Bot:** "Otimo! Vou te enviar o link de pagamento agora mesmo."
+- **Moldura externa**: borda arredondada grossa (~3px) cinza escuro, aspect-ratio de celular (~9:19), com cantos bem arredondados (`rounded-[2.5rem]`)
+- **Notch/barra de status**: pequena barra no topo com hora, icones de sinal/wifi/bateria simulados (texto estatico)
+- **Barra inferior**: linha horizontal fina simulando o indicador home do iPhone
+- **Sombra e glow**: sombra externa + glow sutil roxo ao redor do dispositivo
 
-### Loop automatico
-- Ao terminar a sequencia, as mensagens somem e recomeam do zero (~2s de pausa entre loops)
-- Usa `useInView` para rodar apenas quando visivel na tela
+### Conteudo interno inalterado
+- Barra "Bot Ativo", builder nodes e chat animado permanecem exatamente como estao
+- Apenas ficam "dentro" do frame do celular
+- Altura fixa do dispositivo para manter proporcao realista
 
-### Typing indicator entre cada resposta do bot
-- Aparece por ~1s antes de cada mensagem do bot
-- Desaparece quando a mensagem aparece
-
-### Visual mantido
-- Mesma estetica glass/glow, barra "Bot Ativo", builder nodes no topo
-- Area de chat com altura fixa e scroll visual (overflow hidden, nao interativo)
-- Mensagens aparecem de baixo para cima empurrando as anteriores
+### Responsividade
+- No mobile real, o celular mockup sera menor (max-w ajustado) para caber na tela
+- No desktop, tamanho confortavel (~280px de largura)
 
 ---
 
@@ -39,30 +32,27 @@ Em vez de apenas 1 pergunta + 1 resposta, o mockup vai exibir uma conversa compl
 ### Arquivo modificado
 - `src/components/landing/ChatbotAISection.tsx`
 
-### Logica do MockupBuilder
-- Array de mensagens com `role` (client/bot), `content` e `delay` (tempo acumulado)
-- Estado `visibleMessages` controlado por `useEffect` com timeouts sequenciais
-- Quando todas as mensagens aparecem, aguarda 3s e reseta para recomecar
-- `useInView` controla se o loop esta ativo
-- Container de mensagens com `max-h-[220px] overflow-hidden` e scroll automatico via `scrollIntoView` no ultimo elemento
-- Cada mensagem entra com `motion.div` fade+slide (cliente da esquerda, bot da direita)
-- `TypingDots` aparece antes de cada mensagem do bot e some quando ela surge
-
-### Estrutura das mensagens
+### Estrutura do frame
 ```text
-const chatScript = [
-  { role: "bot", content: "Ola! Bem-vindo...", delayAfterPrev: 1000 },
-  { role: "client", content: "Qual o preco?", delayAfterPrev: 2000 },
-  { role: "bot", content: "O acesso custa R$97...", delayAfterPrev: 2500 },
-  { role: "client", content: "Tem suporte?", delayAfterPrev: 2000 },
-  { role: "bot", content: "Sim! Suporte por WhatsApp...", delayAfterPrev: 2500 },
-  { role: "client", content: "Quero comprar!", delayAfterPrev: 1500 },
-  { role: "bot", content: "Otimo! Vou enviar o link...", delayAfterPrev: 2500 },
-];
++---(moldura cinza escuro, rounded-[2.5rem])---+
+|  [ 9:41  ----  sinal wifi bateria ]          |  <- status bar
+|  +----------------------------------------+  |
+|  | [o] Bot Ativo           ● online       |  |  <- titulo app
+|  +----------------------------------------+  |
+|  | [Inicio] --> [Pergunta] --> [IA]       |  |  <- builder nodes
+|  +----------------------------------------+  |
+|  |                                        |  |
+|  |  Cliente: "Qual o preco?"              |  |  <- chat
+|  |  Bot: "R$97, pagamento unico!"         |  |
+|  |  ...                                   |  |
+|  +----------------------------------------+  |
+|              ____                            |  <- home indicator
++----------------------------------------------+
 ```
 
-### Fluxo de animacao
-- Para cada mensagem do bot: mostra TypingDots por ~1.2s, depois substitui pelos texto
-- Para cada mensagem do cliente: aparece direto com slide da esquerda
-- Ao final: fade-out geral, pausa 2s, reinicia
-- Tudo controlado por `setTimeout` chain dentro de `useEffect`, limpo no cleanup
+### Implementacao
+- Wrapper `div` com classes: `relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl`
+- Status bar: `div` com textos estaticos (9:41, icones em texto) em `text-[10px] text-white/60`
+- Home indicator: `div` com `w-28 h-1 bg-white/20 rounded-full mx-auto mb-2 mt-3`
+- O `MockupBuilder` atual fica dentro, com seus rounded ajustados para `rounded-xl` (menos arredondado, ja que o frame externo cuida disso)
+- O `animate-glow-pulse` move do MockupBuilder para o frame externo
