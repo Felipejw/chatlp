@@ -1,121 +1,55 @@
 
-# Dobra 5 - Showcase Premium com Prints Reais
+# Carrossel Premium na Dobra 5
 
 ## Resumo
-Transformar a secao "Veja o Sistema por Dentro" de placeholders genericos para uma vitrine premium com screenshots reais do produto, moldura estilo MacBook, interacoes de hover/zoom e lightbox fullscreen ao clicar.
+Substituir o grid de screenshots por um carrossel premium no desktop: 1 print grande central com setas laterais e miniaturas clicaveis abaixo.
 
----
+## Layout Final (Desktop)
+
+```text
+                    [ < ]   PRINT GRANDE CENTRAL   [ > ]
+
+          [mini1] [mini2] [mini3] [mini4] [mini5] [mini6] ...
+```
 
 ## O que muda
 
-### 1. Copy atualizada
-- **Titulo**: "Veja o Sistema Funcionando na Pratica"
-- **Subtitulo**: "Interface profissional, pronta para empresas que querem crescer."
+### Desktop - Carrossel com foco central
+- **Print grande**: BrowserFrame ocupando `max-w-4xl` centralizado com animacao de transicao (fade/slide) ao trocar
+- **Setas laterais**: Botoes com icone `ChevronLeft` / `ChevronRight` posicionados nos lados do print grande, estilo glass com hover glow
+- **Miniaturas abaixo**: Linha horizontal de thumbnails pequenos (~120px largura) com borda destacada no ativo, clicaveis para navegar
+- **Transicao**: AnimatePresence do Framer Motion para fade suave entre prints
 
-### 2. Screenshots reais do produto
-As 8 imagens enviadas serao copiadas para `src/assets/screenshots/` e usadas no lugar dos gradientes genericos:
+### Mobile - Mantem carrossel atual
+- Sem mudancas no comportamento mobile (Embla swipe horizontal ja funciona bem)
 
-| Imagem | Titulo no card |
-|--------|---------------|
-| WhatsApp.png | Atendimento WhatsApp |
-| Conexoes.png | Conexoes WhatsApp |
-| Contatos.png | Gestao de Contatos |
-| Disparo_em_Massa.png | Disparo em Massa |
-| Agendamento.png | Agendamentos |
-| Respostas_Rapidas.png | Respostas Rapidas |
-| Personalizar_-_White_Label.png | White Label |
-| Integracoes.png | Integracoes |
-
-### 3. Layout com hierarquia visual (Desktop)
-- **Linha 1**: 2 prints grandes (col-span completo, ~50% cada) -- WhatsApp e Disparo em Massa (telas mais ricas visualmente)
-- **Linha 2**: 3 prints medios
-- **Linha 3**: 3 prints medios
-- Grid: `grid-cols-3` com os 2 primeiros ocupando `col-span-3 grid grid-cols-2`
-
-### 4. Moldura estilo MacBook
-Cada screenshot tera:
-- Barra de titulo com 3 dots (vermelho, amarelo, verde) simulando janela de navegador
-- URL bar mostrando `app.chatbotwhatsapp.store/...`
-- Sombra profunda roxa/azul (`shadow-2xl` + box-shadow customizado)
-- Leve rotacao no hover (perspectiva 3D sutil: `hover:rotate-x-1`)
-
-### 5. Interacoes
-- **Hover**: zoom suave na imagem (`scale-[1.03]`) + glow purple ao redor
-- **Click**: abre lightbox/dialog fullscreen com a imagem em alta resolucao
-- Usa `Dialog` do Radix (ja instalado) para o lightbox
-
-### 6. Mobile
-- Carrossel horizontal (Embla, ja configurado) com 1 print por vez (`flex-[0_0_90%]`)
-- Cada card ocupa quase a tela inteira para manter impacto
-- Tap abre lightbox fullscreen
-- Indicadores de dots embaixo
-- CTA logo abaixo do carrossel
-
----
+### Lightbox - Mantem
+- Click no print grande continua abrindo lightbox fullscreen
 
 ## Detalhes Tecnicos
 
-### Arquivos modificados
-- `src/components/landing/ShowcaseSection.tsx` -- reescrita completa
+### Arquivo: `src/components/landing/ShowcaseSection.tsx`
 
-### Novos arquivos
-- `src/assets/screenshots/` -- 8 imagens copiadas do upload
+**Estado**: `activeIndex` controla qual screenshot esta visivel no centro
 
-### Estrutura do componente
+**Navegacao**:
+- Setas: `prev()` e `next()` alteram `activeIndex` com wrap-around (volta ao inicio/fim)
+- Thumbnails: click direto seta `activeIndex`
 
-**Array de dados:**
-```text
-const screenshots = [
-  { src: importedImage, title: "Atendimento WhatsApp", url: "atendimento", featured: true },
-  { src: importedImage, title: "Disparo em Massa", url: "campanhas", featured: true },
-  { src: importedImage, title: "Gestao de Contatos", url: "contatos" },
-  ...
-];
-```
+**Print grande**:
+- Usa `AnimatePresence` + `motion.div` com `key={activeIndex}` para animar transicoes
+- BrowserFrame existente reutilizado sem mudancas
 
-**Moldura MacBook (sub-componente):**
-```text
-BrowserFrame({ children, url })
-  -> Barra com 3 dots + URL
-  -> children (a imagem)
-  -> Sombra purple/blue
-```
+**Thumbnails**:
+- Grid horizontal com `flex` e `gap-3`, `overflow-x-auto` com scrollbar hidden
+- Cada thumbnail: imagem pequena com `rounded-lg`, `border-2` (branco/primary quando ativo, transparente quando inativo)
+- Opacity reduzida nos inativos (`opacity-50 hover:opacity-80`)
 
-**Lightbox:**
-- Estado `selectedImage` (index ou null)
-- `Dialog` do Radix abrindo com a imagem selecionada em tamanho grande
-- Fundo escuro com blur
-- Click fora ou X para fechar
+**Setas**:
+- Botoes absolutos nas laterais do container do print grande
+- Estilo: `glass` background, `rounded-full`, `w-12 h-12`, icone `ChevronLeft`/`ChevronRight`
+- Hover: glow sutil
 
-**Desktop layout:**
-```text
-<div className="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
-  {featured (2 grandes)}
-</div>
-<div className="grid grid-cols-3 gap-5 max-w-5xl mx-auto mt-5">
-  {remaining (6 medios)}
-</div>
-```
-
-**Mobile layout:**
-- Embla carousel com `flex-[0_0_90%]`
-- onClick abre lightbox
-- Dots indicator
-
-### CSS adicional em index.css
-```text
-.browser-shadow {
-  box-shadow: 0 25px 60px -12px hsl(250 80% 60% / 0.25),
-              0 12px 30px -8px hsl(220 70% 50% / 0.2);
-}
-```
-
-### Perspectiva 3D no hover
-```text
-.showcase-card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-.showcase-card:hover {
-  transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) scale(1.02);
-}
-```
+**Remocoes**:
+- Remove as variaveis `featured` e `regular` (nao mais necessarias)
+- Remove o grid desktop de 2 colunas + 4 colunas
