@@ -1,45 +1,121 @@
 
-# Corrigir Bug de Scroll e Fixar Tamanho do Celular
+# Dobra 5 - Showcase Premium com Prints Reais
 
-## Problema
-O `scrollIntoView` na linha 116 faz o **navegador inteiro** rolar para baixo toda vez que uma nova mensagem aparece, porque ele move o viewport do documento para o elemento referenciado.
+## Resumo
+Transformar a secao "Veja o Sistema por Dentro" de placeholders genericos para uma vitrine premium com screenshots reais do produto, moldura estilo MacBook, interacoes de hover/zoom e lightbox fullscreen ao clicar.
 
-## Correcoes
+---
 
-### 1. Remover `scrollIntoView` e usar scroll interno
-- Substituir `chatEndRef.current?.scrollIntoView(...)` por `chatEndRef.current?.parentElement?.scrollTo(...)` ou simplesmente setar `scrollTop` do container de mensagens
-- Isso garante que apenas o container interno de chat rola, nao a pagina inteira
+## O que muda
 
-### 2. Tamanho fixo do celular
-- Adicionar altura fixa ao frame do smartphone: `h-[560px]` (proporcao realista 9:19 para largura de 280px)
-- A area de chat interna tera `overflow-y-auto` com altura limitada pelo container pai, em vez de `overflow-hidden`
-- O container de mensagens usara `flex flex-col justify-end` para manter mensagens alinhadas na parte inferior
+### 1. Copy atualizada
+- **Titulo**: "Veja o Sistema Funcionando na Pratica"
+- **Subtitulo**: "Interface profissional, pronta para empresas que querem crescer."
+
+### 2. Screenshots reais do produto
+As 8 imagens enviadas serao copiadas para `src/assets/screenshots/` e usadas no lugar dos gradientes genericos:
+
+| Imagem | Titulo no card |
+|--------|---------------|
+| WhatsApp.png | Atendimento WhatsApp |
+| Conexoes.png | Conexoes WhatsApp |
+| Contatos.png | Gestao de Contatos |
+| Disparo_em_Massa.png | Disparo em Massa |
+| Agendamento.png | Agendamentos |
+| Respostas_Rapidas.png | Respostas Rapidas |
+| Personalizar_-_White_Label.png | White Label |
+| Integracoes.png | Integracoes |
+
+### 3. Layout com hierarquia visual (Desktop)
+- **Linha 1**: 2 prints grandes (col-span completo, ~50% cada) -- WhatsApp e Disparo em Massa (telas mais ricas visualmente)
+- **Linha 2**: 3 prints medios
+- **Linha 3**: 3 prints medios
+- Grid: `grid-cols-3` com os 2 primeiros ocupando `col-span-3 grid grid-cols-2`
+
+### 4. Moldura estilo MacBook
+Cada screenshot tera:
+- Barra de titulo com 3 dots (vermelho, amarelo, verde) simulando janela de navegador
+- URL bar mostrando `app.chatbotwhatsapp.store/...`
+- Sombra profunda roxa/azul (`shadow-2xl` + box-shadow customizado)
+- Leve rotacao no hover (perspectiva 3D sutil: `hover:rotate-x-1`)
+
+### 5. Interacoes
+- **Hover**: zoom suave na imagem (`scale-[1.03]`) + glow purple ao redor
+- **Click**: abre lightbox/dialog fullscreen com a imagem em alta resolucao
+- Usa `Dialog` do Radix (ja instalado) para o lightbox
+
+### 6. Mobile
+- Carrossel horizontal (Embla, ja configurado) com 1 print por vez (`flex-[0_0_90%]`)
+- Cada card ocupa quase a tela inteira para manter impacto
+- Tap abre lightbox fullscreen
+- Indicadores de dots embaixo
+- CTA logo abaixo do carrossel
+
+---
 
 ## Detalhes Tecnicos
 
-### Arquivo: `src/components/landing/ChatbotAISection.tsx`
+### Arquivos modificados
+- `src/components/landing/ShowcaseSection.tsx` -- reescrita completa
 
-**Linha 115-117** -- Substituir o `useEffect` do scroll:
-```tsx
-// De:
-chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+### Novos arquivos
+- `src/assets/screenshots/` -- 8 imagens copiadas do upload
 
-// Para:
-const container = chatEndRef.current?.parentElement;
-if (container) {
-  container.scrollTop = container.scrollHeight;
+### Estrutura do componente
+
+**Array de dados:**
+```text
+const screenshots = [
+  { src: importedImage, title: "Atendimento WhatsApp", url: "atendimento", featured: true },
+  { src: importedImage, title: "Disparo em Massa", url: "campanhas", featured: true },
+  { src: importedImage, title: "Gestao de Contatos", url: "contatos" },
+  ...
+];
+```
+
+**Moldura MacBook (sub-componente):**
+```text
+BrowserFrame({ children, url })
+  -> Barra com 3 dots + URL
+  -> children (a imagem)
+  -> Sombra purple/blue
+```
+
+**Lightbox:**
+- Estado `selectedImage` (index ou null)
+- `Dialog` do Radix abrindo com a imagem selecionada em tamanho grande
+- Fundo escuro com blur
+- Click fora ou X para fechar
+
+**Desktop layout:**
+```text
+<div className="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
+  {featured (2 grandes)}
+</div>
+<div className="grid grid-cols-3 gap-5 max-w-5xl mx-auto mt-5">
+  {remaining (6 medios)}
+</div>
+```
+
+**Mobile layout:**
+- Embla carousel com `flex-[0_0_90%]`
+- onClick abre lightbox
+- Dots indicator
+
+### CSS adicional em index.css
+```text
+.browser-shadow {
+  box-shadow: 0 25px 60px -12px hsl(250 80% 60% / 0.25),
+              0 12px 30px -8px hsl(220 70% 50% / 0.2);
 }
 ```
 
-**Linha 120** -- Adicionar altura fixa ao frame:
-```tsx
-// De:
-<div className="relative mx-auto w-[280px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse">
-
-// Para:
-<div className="relative mx-auto w-[280px] h-[560px] bg-black/80 rounded-[2.5rem] p-3 border-[3px] border-white/15 shadow-2xl animate-glow-pulse flex flex-col">
+### Perspectiva 3D no hover
+```text
+.showcase-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.showcase-card:hover {
+  transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) scale(1.02);
+}
 ```
-
-**Container interno (motion.div glass)** -- Permitir que ocupe o espaco restante:
-- Adicionar `flex-1 flex flex-col min-h-0` ao motion.div glass
-- A area de chat tera `flex-1 overflow-y-auto` em vez de `max-h-[240px] overflow-hidden`
