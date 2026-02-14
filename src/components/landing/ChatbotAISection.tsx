@@ -47,6 +47,7 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
   const [showTyping, setShowTyping] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
   const clearAllTimeouts = useCallback(() => {
@@ -113,7 +114,7 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
   }, [isInView, startSequence, clearAllTimeouts]);
 
   useEffect(() => {
-    const container = chatEndRef.current?.parentElement;
+    const container = chatContainerRef.current;
     if (container) {
       container.scrollTop = container.scrollHeight;
     }
@@ -173,7 +174,7 @@ const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
       </div>
 
       {/* Chat simulation */}
-      <div className="flex-1 overflow-y-auto">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto">
         <div className="px-4 py-4 space-y-3">
           <AnimatePresence mode="popLayout">
             {visibleMessages.map((msgIndex) => {
