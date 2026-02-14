@@ -122,6 +122,21 @@
     pointer-events: none;
     z-index: 0;
   }
+
+  .browser-shadow {
+    box-shadow: 0 25px 60px -12px hsl(250 80% 60% / 0.25),
+                0 12px 30px -8px hsl(220 70% 50% / 0.2);
+  }
+
+  .showcase-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .showcase-card:hover {
+    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) scale(1.02);
+    box-shadow: 0 30px 70px -12px hsl(250 80% 60% / 0.35),
+                0 15px 40px -8px hsl(220 70% 50% / 0.25);
+  }
 }
 
 @keyframes flow-line {
