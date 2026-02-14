@@ -1,27 +1,29 @@
 import { ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const GuaranteeSection = () => (
   <section className="py-20 relative">
     <div className="container mx-auto px-4">
-      <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-        className="glass rounded-2xl p-10 md:p-16 text-center max-w-3xl mx-auto gradient-border glow-primary-sm"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="glass rounded-2xl p-8 md:p-10 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-8"
       >
-        <div className="w-20 h-20 rounded-full bg-primary/15 mx-auto flex items-center justify-center mb-6">
-          <ShieldCheck className="w-10 h-10 text-primary" />
+        <div className="shrink-0 w-20 h-20 bg-green-500/15 rounded-full flex items-center justify-center">
+          <ShieldCheck className="w-10 h-10 text-green-500" />
         </div>
-        <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-          7 Dias de Garantia <span className="gradient-text">Incondicional</span>
-        </h2>
-        <p className="text-muted-foreground max-w-lg mx-auto mb-8">
-          Se por qualquer motivo você não gostar do sistema, devolvemos 100% do seu dinheiro em até 7 dias. Sem burocracia, sem perguntas.
-        </p>
-        <Button asChild size="lg" className="glow-primary bg-primary hover:bg-primary/90 font-bold px-8">
-          <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
-            Comprar Agora por R$97
-          </a>
-        </Button>
+        <div className="text-center md:text-left">
+          <h3 className="font-display text-2xl md:text-3xl font-bold mb-2">
+            Sua Compra é 100% Segura!
+          </h3>
+          <p className="text-muted-foreground leading-relaxed">
+            O código de defesa do consumidor (Art. 49) garante{" "}
+            <span className="text-green-500 font-bold">7 dias de garantia incondicional</span>!
+            Se não gostar, devolvemos seu dinheiro sem perguntas.
+          </p>
+        </div>
       </motion.div>
     </div>
   </section>
