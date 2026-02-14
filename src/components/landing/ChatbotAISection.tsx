@@ -1,7 +1,7 @@
 import { Brain, Blocks, Sparkles, Zap, Play, MessageCircle, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 const highlights = [
   { icon: Blocks, title: "Construtor Visual", desc: "Monte fluxos completos arrastando blocos — sem escrever uma linha de código." },
@@ -9,6 +9,25 @@ const highlights = [
   { icon: Sparkles, title: "OpenAI Opcional", desc: "Ative o ChatGPT para respostas ainda mais precisas e naturais." },
   { icon: Zap, title: "Respostas Automáticas", desc: "Seu sistema trabalha sozinho 24/7, sem depender de ninguém." },
 ];
+
+type ChatMessage = {
+  role: "bot" | "client";
+  content: string;
+  delayAfterPrev: number;
+};
+
+const chatScript: ChatMessage[] = [
+  { role: "bot", content: "Olá! Bem-vindo ao nosso atendimento. Como posso ajudar? 😊", delayAfterPrev: 1000 },
+  { role: "client", content: "Qual o preço do plano?", delayAfterPrev: 2000 },
+  { role: "bot", content: "O acesso completo custa R$97 — pagamento único, sem mensalidade!", delayAfterPrev: 2500 },
+  { role: "client", content: "Tem suporte incluso?", delayAfterPrev: 2000 },
+  { role: "bot", content: "Sim! Suporte por WhatsApp e atualizações gratuitas por 1 ano.", delayAfterPrev: 2500 },
+  { role: "client", content: "Quero comprar!", delayAfterPrev: 1500 },
+  { role: "bot", content: "Ótimo! Vou te enviar o link de pagamento agora mesmo. 🚀", delayAfterPrev: 2500 },
+];
+
+const TYPING_DURATION = 1200;
+const RESTART_DELAY = 3000;
 
 const TypingDots = () => (
   <div className="flex gap-1 items-center px-3 py-2">
@@ -23,92 +42,170 @@ const TypingDots = () => (
   </div>
 );
 
-const MockupBuilder = ({ isInView }: { isInView: boolean }) => (
-  <div className="glass rounded-2xl overflow-hidden animate-glow-pulse">
-    {/* Title bar */}
-    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-white/5">
-      <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-      <span className="text-xs font-medium text-foreground/80">Bot Ativo</span>
-      <span className="text-[10px] text-green-400/70 ml-auto">● online</span>
-    </div>
+const MockupBuilder = ({ isInView }: { isInView: boolean }) => {
+  const [visibleMessages, setVisibleMessages] = useState<number[]>([]);
+  const [showTyping, setShowTyping] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
-    {/* Builder nodes */}
-    <div className="px-4 py-5 border-b border-white/10">
-      <div className="flex items-center justify-between gap-2">
-        {[
-          { icon: Play, label: "Início", delay: 0 },
-          { icon: MessageCircle, label: "Pergunta", delay: 0.2 },
-          { icon: Bot, label: "Resposta IA", delay: 0.4 },
-        ].map((node, i) => (
-          <div key={node.label} className="flex items-center gap-2 flex-1">
-            <motion.div
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/10 bg-white/5 min-w-0"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ delay: node.delay, duration: 0.4 }}
-            >
-              <node.icon className="w-3.5 h-3.5 text-primary shrink-0" />
-              <span className="text-[11px] text-foreground/70 truncate">{node.label}</span>
-            </motion.div>
-            {i < 2 && (
-              <svg width="24" height="12" className="shrink-0" viewBox="0 0 24 12">
-                <path
-                  d="M0 6 L20 6"
-                  fill="none"
-                  stroke="hsl(250 80% 60% / 0.5)"
-                  strokeWidth="1.5"
-                  className="animate-flow-line"
-                />
-                <path d="M17 3 L21 6 L17 9" fill="none" stroke="hsl(250 80% 60% / 0.5)" strokeWidth="1.5" />
-              </svg>
-            )}
-          </div>
-        ))}
+  const clearAllTimeouts = useCallback(() => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+  }, []);
+
+  const startSequence = useCallback(() => {
+    clearAllTimeouts();
+    setVisibleMessages([]);
+    setShowTyping(false);
+    setIsFadingOut(false);
+
+    let accumulated = 0;
+
+    chatScript.forEach((msg, index) => {
+      accumulated += msg.delayAfterPrev;
+
+      if (msg.role === "bot") {
+        // Show typing dots first
+        const typingTimeout = setTimeout(() => {
+          setShowTyping(true);
+        }, accumulated);
+        timeoutsRef.current.push(typingTimeout);
+
+        // Then show message and hide typing
+        const msgTimeout = setTimeout(() => {
+          setShowTyping(false);
+          setVisibleMessages((prev) => [...prev, index]);
+        }, accumulated + TYPING_DURATION);
+        timeoutsRef.current.push(msgTimeout);
+
+        accumulated += TYPING_DURATION;
+      } else {
+        const msgTimeout = setTimeout(() => {
+          setVisibleMessages((prev) => [...prev, index]);
+        }, accumulated);
+        timeoutsRef.current.push(msgTimeout);
+      }
+    });
+
+    // Fade out and restart
+    const fadeTimeout = setTimeout(() => {
+      setIsFadingOut(true);
+    }, accumulated + RESTART_DELAY);
+    timeoutsRef.current.push(fadeTimeout);
+
+    const restartTimeout = setTimeout(() => {
+      startSequence();
+    }, accumulated + RESTART_DELAY + 800);
+    timeoutsRef.current.push(restartTimeout);
+  }, [clearAllTimeouts]);
+
+  useEffect(() => {
+    if (isInView) {
+      startSequence();
+    } else {
+      clearAllTimeouts();
+      setVisibleMessages([]);
+      setShowTyping(false);
+      setIsFadingOut(false);
+    }
+    return clearAllTimeouts;
+  }, [isInView, startSequence, clearAllTimeouts]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [visibleMessages, showTyping]);
+
+  return (
+    <motion.div
+      className="glass rounded-2xl overflow-hidden animate-glow-pulse"
+      animate={{ opacity: isFadingOut ? 0 : 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-white/5">
+        <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+        <span className="text-xs font-medium text-foreground/80">Bot Ativo</span>
+        <span className="text-[10px] text-green-400/70 ml-auto">● online</span>
       </div>
-    </div>
 
-    {/* Chat simulation */}
-    <div className="px-4 py-4 space-y-3">
-      {/* Client message */}
-      <motion.div
-        className="flex justify-start"
-        initial={{ opacity: 0, x: -20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-        transition={{ delay: 0.6, duration: 0.4 }}
-      >
-        <div className="bg-secondary rounded-2xl rounded-bl-md px-3.5 py-2 max-w-[70%]">
-          <p className="text-xs text-foreground/90">Qual o preço?</p>
+      {/* Builder nodes */}
+      <div className="px-4 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between gap-2">
+          {[
+            { icon: Play, label: "Início", delay: 0 },
+            { icon: MessageCircle, label: "Pergunta", delay: 0.2 },
+            { icon: Bot, label: "Resposta IA", delay: 0.4 },
+          ].map((node, i) => (
+            <div key={node.label} className="flex items-center gap-2 flex-1">
+              <motion.div
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/10 bg-white/5 min-w-0"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ delay: node.delay, duration: 0.4 }}
+              >
+                <node.icon className="w-3.5 h-3.5 text-primary shrink-0" />
+                <span className="text-[11px] text-foreground/70 truncate">{node.label}</span>
+              </motion.div>
+              {i < 2 && (
+                <svg width="24" height="12" className="shrink-0" viewBox="0 0 24 12">
+                  <path d="M0 6 L20 6" fill="none" stroke="hsl(250 80% 60% / 0.5)" strokeWidth="1.5" className="animate-flow-line" />
+                  <path d="M17 3 L21 6 L17 9" fill="none" stroke="hsl(250 80% 60% / 0.5)" strokeWidth="1.5" />
+                </svg>
+              )}
+            </div>
+          ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Typing indicator */}
-      <motion.div
-        className="flex justify-end"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: [0, 1, 1, 0] } : { opacity: 0 }}
-        transition={{ delay: 1.2, duration: 1.2, times: [0, 0.1, 0.7, 1] }}
-      >
-        <div className="bg-primary/20 rounded-2xl rounded-br-md">
-          <TypingDots />
-        </div>
-      </motion.div>
+      {/* Chat simulation */}
+      <div className="max-h-[240px] overflow-hidden">
+        <div className="px-4 py-4 space-y-3">
+          <AnimatePresence mode="popLayout">
+            {visibleMessages.map((msgIndex) => {
+              const msg = chatScript[msgIndex];
+              const isClient = msg.role === "client";
+              return (
+                <motion.div
+                  key={msgIndex}
+                  className={`flex ${isClient ? "justify-start" : "justify-end"}`}
+                  initial={{ opacity: 0, x: isClient ? -20 : 20, y: 10 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <div
+                    className={`rounded-2xl px-3.5 py-2 max-w-[80%] ${
+                      isClient
+                        ? "bg-secondary rounded-bl-md"
+                        : "bg-primary/20 rounded-br-md"
+                    }`}
+                  >
+                    <p className="text-xs text-foreground/90">{msg.content}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
 
-      {/* AI response */}
-      <motion.div
-        className="flex justify-end"
-        initial={{ opacity: 0, x: 20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-        transition={{ delay: 2.4, duration: 0.4 }}
-      >
-        <div className="bg-primary/20 rounded-2xl rounded-br-md px-3.5 py-2 max-w-[80%]">
-          <p className="text-xs text-foreground/90">
-            Posso te ajudar com isso! Você quer um orçamento ou falar com um atendente?
-          </p>
+          {showTyping && (
+            <motion.div
+              className="flex justify-end"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="bg-primary/20 rounded-2xl rounded-br-md">
+                <TypingDots />
+              </div>
+            </motion.div>
+          )}
+
+          <div ref={chatEndRef} />
         </div>
-      </motion.div>
-    </div>
-  </div>
-);
+      </div>
+    </motion.div>
+  );
+};
 
 const ChatbotAISection = () => {
   const ref = useRef(null);
@@ -129,7 +226,6 @@ const ChatbotAISection = () => {
 
           {/* Content */}
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            {/* Emotional badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
