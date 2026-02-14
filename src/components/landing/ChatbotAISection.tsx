@@ -280,7 +280,7 @@ const ChatbotAISection = () => {
 
             <div className="mt-10">
               <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
-                <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+                <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
                   Comprar Agora por R$97
                 </a>
               </Button>

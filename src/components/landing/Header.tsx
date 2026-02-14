@@ -30,7 +30,7 @@ const Header = () => {
 
         <div className="hidden md:block">
           <Button asChild className="glow-primary-sm bg-primary hover:bg-primary/90 font-semibold">
-            <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+            <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               Comprar Agora por R$97
             </a>
           </Button>
@@ -49,7 +49,7 @@ const Header = () => {
             </a>
           ))}
           <Button asChild className="w-full glow-primary-sm bg-primary font-semibold">
-            <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+            <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               Comprar Agora por R$97
             </a>
           </Button>

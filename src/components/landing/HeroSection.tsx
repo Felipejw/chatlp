@@ -125,7 +125,7 @@ const HeroSection = () => (
         {/* CTA */}
         <div className="flex flex-col items-center gap-2">
           <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 text-lg px-8 font-bold text-white">
-            <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+            <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               Comprar Agora por R$97
             </a>
           </Button>

@@ -120,7 +120,7 @@ const OfferSection = () => {
             size="lg"
             className="w-full glow-green bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-6"
           >
-            <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+            <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               <ShoppingCart className="w-5 h-5 mr-2" />
               Comprar Agora por R$97
             </a>
