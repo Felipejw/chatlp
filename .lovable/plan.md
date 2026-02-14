@@ -1,60 +1,115 @@
 
-
-# Otimizacao Mobile
+# Reformulacao da Dobra 4 (Chatbot AI Section)
 
 ## Resumo
-Melhorar a experiencia mobile com carrossel horizontal por categoria na dobra de Features e barra de acesso rapido no rodape fixo.
+Transformar a secao de Chatbot com IA de um mockup generico para uma demonstracao realista do produto, com conversa animada simulando interacao cliente/IA, blocos visuais do construtor e copy mais estrategica.
 
 ---
 
 ## Mudancas
 
-### 1. Feature Cards com Carrossel Horizontal no Mobile
-Na dobra 3 (FeaturesGrid), no mobile cada categoria vira um carrossel horizontal swipeable:
-- Cards com largura de ~85% da tela para mostrar parcialmente o proximo (efeito "peek")
-- Dots de navegacao abaixo de cada carrossel
-- No desktop, o grid atual permanece inalterado
-- Usa `embla-carousel-react` (ja instalado no projeto)
+### 1. Mockup Realista (Lado Esquerdo)
+Substituir os blocos placeholder por uma simulacao visual do construtor + conversa:
 
-### 2. Barra de Acesso Rapido no Mobile
-Expandir a barra inferior fixa para incluir mini-navegacao alem do botao CTA:
+**Parte superior -- Construtor Visual (mini)**
+- 3 blocos conectados por linhas SVG simulando um fluxo:
+  - Bloco "Inicio" (icone play) conecta a "Pergunta" conecta a "Resposta IA"
+- Cada bloco com label visivel, borda sutil, icone pequeno
+- Linhas curvas SVG ligando os blocos
 
-```text
-+---------------------------------------------------+
-| [Recursos] [Demo] [FAQ]  |  Comprar por R$97      |
-+---------------------------------------------------+
-```
+**Parte inferior -- Conversa Simulada (chat bubbles)**
+- Balao do cliente (alinhado a esquerda, fundo escuro): "Qual o preco?"
+- Balao da IA (alinhado a direita, fundo primary/20): "Posso te ajudar com isso! Voce quer um orcamento ou falar com um atendente?"
+- As mensagens aparecem com animacao sequencial (typing effect com delay):
+  1. Balao do cliente aparece primeiro (delay 0s)
+  2. Indicador "digitando..." aparece (delay 1s)
+  3. Balao da IA aparece (delay 2s)
+- Animacao reinicia ao entrar na viewport
 
-- 3 icones pequenos com label de 10px para scroll rapido ate as secoes (#features, #showcase, #faq)
-- Botao CTA ocupa ~50% da largura
-- Smooth scroll ao tocar nos icones
+**Barra superior do mockup**
+- Simular barra de titulo do app: circulo verde + texto "Bot Ativo" + indicador online
+- Transmite sensacao de "produto real rodando"
 
-### 3. Showcase com Swipe no Mobile
-Os 4 cards da ShowcaseSection viram carrossel horizontal no mobile com swipe e dots, em vez de grid 2x2.
+### 2. Selo Emocional Acima do Titulo
+Adicionar badge/selo antes do h2:
+- Texto: "O Futuro do Atendimento Ja Esta Aqui"
+- Icone de sparkle/cristal ao lado
+- Estilo: `text-xs uppercase tracking-wider text-primary/80` com fundo `bg-primary/10 rounded-full px-3 py-1`
+- Animacao sutil de entrada
+
+### 3. Copy Mais Estrategica
+**Subtitulo atualizado:**
+- De: "Construa fluxos inteligentes visualmente e deixe a IA responder seus clientes 24 horas por dia."
+- Para: "Automatize seu atendimento com fluxos visuais e deixe a Inteligencia Artificial responder seus clientes 24/7 -- mesmo quando sua equipe estiver offline."
+
+**Titulo h2 mantido** (ja esta bom com o gradient-text em "Inteligencia Artificial").
+
+### 4. Highlights com Copy Refinada
+Pequenos ajustes nas descricoes dos 4 destaques:
+- **Construtor Visual:** "Monte fluxos completos arrastando blocos -- sem escrever uma linha de codigo."
+- **IA Gemini Gratuito:** "Inteligencia artificial inclusa sem custo extra. Seu bot responde sozinho."
+- **OpenAI Opcional:** "Ative o ChatGPT para respostas ainda mais precisas e naturais."
+- **Respostas Automaticas:** "Seu sistema trabalha sozinho 24/7, sem depender de ninguem."
+
+### 5. Movimento e Sensacao de Tecnologia Viva
+- Linha SVG entre blocos do construtor com animacao de "fluxo" (dash-offset animado)
+- Ponto pulsante verde no indicador "Bot Ativo"
+- Leve glow animado no contorno do mockup (glow-pulse existente no tailwind config)
+- Baloes de chat com stagger animation via framer-motion
 
 ---
 
 ## Detalhes Tecnicos
 
-### FeaturesGrid.tsx
-- Importar `useIsMobile` de `@/hooks/use-mobile`
-- Importar `useEmblaCarousel` de `embla-carousel-react`
-- Condicional: no mobile, renderizar cards dentro de container embla horizontal; no desktop, manter grid
-- Cada card no carrossel com `min-w-[85%]` e `snap-center`
-- Componente de dots usando `emblaApi.scrollSnapList()` e `emblaApi.selectedScrollSnap()`
+**Arquivo:** `src/components/landing/ChatbotAISection.tsx`
 
-### FloatingElements.tsx
-- Reorganizar layout da barra inferior mobile com `flex`
-- Lado esquerdo: 3 botoes icone+label (LayoutDashboard, Monitor, HelpCircle) que fazem `document.querySelector(id).scrollIntoView({ behavior: 'smooth' })`
-- Lado direito: botao CTA compacto
-- Importar icones de lucide-react
+### Estrutura do Mockup
+```text
++------------------------------------------+
+| [o] Bot Ativo  ●                         |  <- barra titulo
++------------------------------------------+
+|                                          |
+|  [Inicio] ----> [Pergunta] ----> [IA]    |  <- blocos SVG
+|                                          |
++------------------------------------------+
+|  Cliente: "Qual o preco?"                |  <- chat bubble esq
+|                                          |
+|  IA: "Posso te ajudar! Quer orcamento    |  <- chat bubble dir
+|       ou falar com atendente?"           |
++------------------------------------------+
+```
 
-### ShowcaseSection.tsx
-- No mobile: usar embla-carousel para os 4 cards com swipe horizontal e dots
-- No desktop: manter grid sm:grid-cols-2 inalterado
+### Animacoes
+- Blocos do construtor: `motion.div` com `initial={{ opacity: 0, scale: 0.8 }}` e stagger delay
+- Linhas SVG: CSS `stroke-dasharray` + `stroke-dashoffset` animado com keyframe
+- Chat bubbles: `motion.div` com delays sequenciais (0s, 1.5s, 2.5s)
+- Indicador "digitando...": 3 dots pulsantes aparecendo entre as mensagens
+- Ponto verde "Bot Ativo": `animate-pulse` do Tailwind
+- Glow do card: classe `animate-glow-pulse` ja existente
+
+### Selo emocional
+```text
+<motion.div>
+  <span class="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider 
+    text-primary/80 bg-primary/10 rounded-full px-3 py-1 mb-4">
+    <Sparkles class="w-3.5 h-3.5" />
+    O Futuro do Atendimento Ja Esta Aqui
+  </span>
+</motion.div>
+```
+
+### Keyframe para linhas SVG (adicionar ao index.css)
+```css
+@keyframes flow-line {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+.animate-flow-line {
+  stroke-dasharray: 8 4;
+  animation: flow-line 2s linear infinite;
+}
+```
 
 ### Arquivos modificados
-- `src/components/landing/FeaturesGrid.tsx`
-- `src/components/landing/FloatingElements.tsx`
-- `src/components/landing/ShowcaseSection.tsx`
-
+- `src/components/landing/ChatbotAISection.tsx` -- reescrita completa do mockup e ajustes de copy
+- `src/index.css` -- adicionar keyframe `flow-line` para animacao das linhas SVG
