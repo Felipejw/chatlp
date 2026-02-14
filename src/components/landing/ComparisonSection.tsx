@@ -12,7 +12,7 @@ const diferenciais = [
 ];
 
 const ComparisonSection = () => (
-  <section className="py-20 relative">
+  <section className="py-12 relative">
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[120px]" />
     </div>

@@ -2,7 +2,7 @@ import { ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const GuaranteeSection = () => (
-  <section className="py-20 relative">
+  <section className="py-12 relative">
     <div className="container mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}

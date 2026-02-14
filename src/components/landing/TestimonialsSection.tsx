@@ -89,7 +89,7 @@ const TestimonialsSection = () => {
   const regular = testimonials.slice(1);
 
   return (
-    <section id="testimonials" className="py-20 relative">
+    <section id="testimonials" className="py-12 relative">
       <div className="container mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">

@@ -231,7 +231,7 @@ const ChatbotAISection = () => {
   const isInView = useInView(ref, { once: false, amount: 0.3 });
 
   return (
-    <section id="ai" className="py-20 relative">
+    <section id="ai" className="py-12 relative">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-primary/8 blur-[140px]" />
       </div>
