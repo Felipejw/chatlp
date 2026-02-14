@@ -1,15 +1,16 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { ShieldCheck, Lock, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
 const faqs = [
-  { q: "É pagamento único mesmo?", a: "Sim! Você paga apenas R$97 uma única vez e tem acesso vitalício ao sistema completo, com código fonte e todas as atualizações." },
-  { q: "Preciso pagar mensalidade?", a: "Não. Diferente de outras plataformas, o Chatbot WhatsApp não cobra mensalidade. O único custo é o pagamento único de R$97." },
-  { q: "Funciona com quantos WhatsApps?", a: "Ilimitados! Você pode conectar quantos números de WhatsApp quiser, sem custo adicional." },
-  { q: "Preciso saber programar?", a: "Não. O sistema possui interface visual intuitiva para criar chatbots e gerenciar atendimentos. Caso queira personalizar, o código fonte está incluso." },
-  { q: "Vocês instalam para mim?", a: "Sim! Oferecemos instalação opcional por R$97. Ou você mesmo pode instalar seguindo nossos tutoriais completos na área de membros." },
-  { q: "Recebo atualizações?", a: "Sim, todas as atualizações estão inclusas sem custo adicional." },
-  { q: "A IA é gratuita?", a: "Sim! A integração com o Gemini do Google é totalmente gratuita. Opcionalmente, você pode integrar a OpenAI (ChatGPT) usando sua própria chave." },
+  { q: "É pagamento único mesmo?", a: "Sim. Você paga apenas R$97 uma única vez e o sistema é seu. Sem mensalidade, sem taxa recorrente e sem surpresas futuras." },
+  { q: "Preciso pagar mensalidade?", a: "Não. Diferente de outras plataformas que cobram mensalmente, aqui você paga uma única vez e tem acesso vitalício." },
+  { q: "Funciona com quantos WhatsApps?", a: "Você pode conectar múltiplos números e adicionar quantos atendentes precisar. Sem cobrança por usuário." },
+  { q: "Preciso saber programar?", a: "Não. O sistema possui construtor visual drag-and-drop. Você monta fluxos sem escrever código." },
+  { q: "Vocês instalam para mim?", a: "Sim. Após a compra você recebe o código fonte e tutoriais completos. Caso prefira, pode contratar nossa instalação por R$97." },
+  { q: "Recebo atualizações?", a: "Sim. Você recebe atualizações e melhorias contínuas sem custo adicional." },
+  { q: "A IA é gratuita?", a: "Sim. A integração com Gemini está inclusa sem custo extra. Caso queira, pode integrar a OpenAI opcionalmente." },
 ];
 
 const FAQSection = () => (
@@ -34,7 +35,22 @@ const FAQSection = () => (
         </Accordion>
       </motion.div>
 
-      <div className="text-center mt-12">
+      <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-10 mb-6">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <ShieldCheck className="w-4 h-4 text-green-500" />
+          <span>Compra 100% segura</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Lock className="w-4 h-4 text-green-500" />
+          <span>Pagamento único</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Zap className="w-4 h-4 text-green-500" />
+          <span>Acesso imediato</span>
+        </div>
+      </div>
+
+      <div className="text-center">
         <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
           <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
             Comprar Agora por R$97
