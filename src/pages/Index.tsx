@@ -5,7 +5,7 @@ import ChatbotAISection from "@/components/landing/ChatbotAISection";
 import ShowcaseSection from "@/components/landing/ShowcaseSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import FAQSection from "@/components/landing/FAQSection";
-
+import OfferSection from "@/components/landing/OfferSection";
 
 import FloatingElements from "@/components/landing/FloatingElements";
 
@@ -18,6 +18,7 @@ const Index = () => (
       <ChatbotAISection />
       <ShowcaseSection />
       <TestimonialsSection />
+      <OfferSection />
       <FAQSection />
       
     </main>
