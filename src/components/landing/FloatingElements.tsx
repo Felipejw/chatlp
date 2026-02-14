@@ -1,5 +1,15 @@
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, LayoutDashboard, Monitor, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const navItems = [
+  { icon: LayoutDashboard, label: "Recursos", target: "#features" },
+  { icon: Monitor, label: "Demo", target: "#showcase" },
+  { icon: HelpCircle, label: "FAQ", target: "#faq" },
+];
+
+const scrollTo = (selector: string) => {
+  document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
+};
 
 const FloatingElements = () => (
   <>
@@ -13,13 +23,30 @@ const FloatingElements = () => (
       <MessageCircle className="w-7 h-7 text-white" />
     </a>
 
-    {/* Mobile fixed bottom bar */}
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden glass border-t border-white/5 p-3">
-      <Button asChild className="w-full glow-green bg-green-500 hover:bg-green-600 font-bold text-white">
-        <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
-          Comprar Agora por R$97
-        </a>
-      </Button>
+    {/* Mobile fixed bottom bar with mini-nav */}
+    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden glass border-t border-white/5 px-3 py-2">
+      <div className="flex items-center gap-2">
+        {/* Mini navigation */}
+        <div className="flex items-center gap-1">
+          {navItems.map((item) => (
+            <button
+              key={item.target}
+              onClick={() => scrollTo(item.target)}
+              className="flex flex-col items-center gap-0.5 px-2.5 py-1 rounded-lg hover:bg-white/5 transition-colors"
+            >
+              <item.icon className="w-4 h-4 text-muted-foreground" />
+              <span className="text-[10px] text-muted-foreground leading-none">{item.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* CTA button */}
+        <Button asChild size="sm" className="flex-1 glow-green bg-green-500 hover:bg-green-600 font-bold text-white text-xs h-9">
+          <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
+            Comprar R$97
+          </a>
+        </Button>
+      </div>
     </div>
   </>
 );
