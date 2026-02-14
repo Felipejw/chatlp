@@ -6,6 +6,7 @@ import ShowcaseSection from "@/components/landing/ShowcaseSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import FAQSection from "@/components/landing/FAQSection";
 import OfferSection from "@/components/landing/OfferSection";
+import GuaranteeSection from "@/components/landing/GuaranteeSection";
 
 import FloatingElements from "@/components/landing/FloatingElements";
 
@@ -19,6 +20,7 @@ const Index = () => (
       <ShowcaseSection />
       <TestimonialsSection />
       <OfferSection />
+      <GuaranteeSection />
       <FAQSection />
       
     </main>
