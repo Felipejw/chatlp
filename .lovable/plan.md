@@ -1,63 +1,79 @@
 
 
-# Reformulacao Completa da Dobra 2 (Diferenciais)
+# Reformulacao Completa da Dobra 3 (Features Grid)
 
 ## Resumo
-Transformar a secao de diferenciais de uma grade informativa e uniforme para uma dobra de alto impacto com hierarquia visual clara, copy persuasiva com contraste competitivo e microinteracoes premium.
+Transformar a grade de funcionalidades de uma lista tecnica uniforme para uma secao categorizada com hierarquia visual, copy orientada a resultados e destaque nos 3 recursos principais.
 
 ---
 
 ## Mudancas Detalhadas
 
-### 1. Card Destaque -- "Pagamento Unico" (Hero Card)
-- O card "Pagamento Unico" sera maior, ocupando 2 colunas no desktop (col-span-2)
-- Tera borda verde visivel (`border-green-500/40`), glow verde mais forte e fundo levemente mais claro (`bg-green-500/10`)
-- Icone maior (w-16 h-16) com gradiente verde
-- Texto maior e mais impactante
-- Nova copy: **"Pague Uma Vez. Use Para Sempre."** com subtexto: "Enquanto outros cobram R$200+/mes, voce investe R$97 uma unica vez e o sistema e seu para sempre."
+### 1. Novo Titulo (Posicionamento Estrategico)
+- **Atual:** "Tudo que voce precisa, em um so lugar"
+- **Novo:** "A Central Completa de Atendimento e Vendas no WhatsApp"
+- Subtitulo: "+14 funcionalidades para automatizar, organizar e escalar seu negocio."
 
-### 2. Reescrita Completa dos Textos (Copy Persuasiva)
-Substituir todos os textos por versoes com mais emocao, contraste e senso de propriedade:
+### 2. Categorias Visuais (3 Blocos)
+Organizar os 14 cards em 3 categorias com labels visuais:
 
-- **Pagamento Unico** -> "Pague Uma Vez. Use Para Sempre." / "Enquanto outros cobram R$200+/mes, voce investe R$97 uma unica vez e o sistema e seu para sempre."
-- **Atendentes Ilimitados** -> "Escale Sem Pagar Mais" / "Adicione 10, 50 ou 100 atendentes. Zero custo extra. Seus concorrentes pagam por cada um."
-- **White Label** -> "Sua Marca, Seu Negocio" / "Remova qualquer rastro e revenda como produto proprio. Crie uma nova fonte de receita."
-- **Codigo Fonte Incluso** -> "Controle Total na Sua Mao" / "Hospede onde quiser, customize como quiser. Sem depender de ninguem."
-- **IA Integrada** -> "IA Que Trabalha Por Voce" / "Gemini gratuito ou OpenAI. Respostas inteligentes 24/7 sem voce levantar um dedo."
-- **Sem Mensalidade** substituido por **"Suporte + Atualizacoes"** -> "Evolucao Continua" / "Receba melhorias e suporte da comunidade. O sistema cresce junto com seu negocio."
+- **AUTOMACAO** (glow verde) -- IA, Chatbot Visual, Disparo em Massa, Agendamentos
+- **GESTAO** (glow azul) -- CRM Integrado, Atendimento Multiusuario, Setores, Transferencia, Tags
+- **CRESCIMENTO** (glow roxo) -- Dashboard, Relatorios, API Docs, Integracoes, Tutoriais
 
-### 3. Frase Estrategica Abaixo do Titulo
-- Adicionar uma frase de contraste logo abaixo do subtitulo atual:
-- **"Enquanto outras plataformas cobram mensalidades eternas, voce paga uma vez e tem controle total."**
-- Estilo: texto branco semi-bold, levemente maior que o subtitulo, com destaque verde em "paga uma vez"
+Cada categoria tera um label/badge pequeno acima do grupo de cards.
 
-### 4. Microinteracoes e Hover Premium
-- Hover nos cards: elevacao com `translate-y -2px`, aumento de glow, borda mais visivel
-- Icones: fundo com gradiente sutil (de green-500/15 para green-400/25 no hover)
-- Titulos dos cards com `text-white` (mais contraste) em vez de herdar foreground padrao
+### 3. Destaque nos 3 Principais (Hero Features)
+Os cards de **IA Gemini/OpenAI**, **Chatbot Visual** e **Disparo em Massa** terao:
+- Icone maior (~w-10 h-10 vs w-8 h-8)
+- Glow mais forte na cor da categoria
+- Borda levemente visivel
+- Padding um pouco maior
 
-### 5. Layout com Hierarquia Visual
-- Desktop: card destaque ocupa 2 colunas na primeira linha, os outros 4 cards em grid 2x2 abaixo (ou 2+3 com assimetria)
-- Alternativa: grid de 3 colunas onde o primeiro card (Pagamento Unico) tem altura e padding maiores
-- Mobile: cards empilhados com card destaque tendo padding e fonte maiores, mais espaco vertical entre cards (gap-4 para gap-6)
+### 4. Copy Orientada a Resultados
+Reescrever todas as descricoes para vender beneficio, nao funcao:
 
-### 6. Cores e Vibrancia
-- Glow nos cards levemente mais intenso (de green-500/30 para green-500/40)
-- Titulos dos cards em branco puro (`text-white`) para mais contraste
-- Icones com `text-green-400` mantido mas com drop-shadow sutil verde
+- **Atendimento Multiusuario:** "Varios atendentes trabalhando ao mesmo tempo, sem perder conversas."
+- **CRM Integrado:** "Organize, acompanhe e feche mais negocios dentro do WhatsApp."
+- **Disparo em Massa:** "Envie campanhas para sua base e gere novas oportunidades de venda."
+- **Chatbot Visual:** "Crie fluxos automatizados em minutos, sem precisar programar."
+- **IA Gemini/OpenAI:** "Respostas automaticas inteligentes 24/7, mesmo quando voce esta offline."
+- **Integracoes:** "Conecte com as ferramentas que voce ja usa no dia a dia."
+- **API Docs:** "Documentacao completa para integracoes personalizadas."
+- **Tags:** "Segmente e organize seus contatos para acoes mais inteligentes."
+- **Setores:** "Direcione conversas para o departamento certo automaticamente."
+- **Transferencia:** "Transfira atendimentos entre agentes sem perder o historico."
+- **Agendamentos:** "Agende atendimentos e follow-ups sem sair do sistema."
+- **Relatorios:** "Acompanhe metricas de atendimento e tome decisoes com dados."
+- **Dashboard:** "Visao completa do seu negocio em tempo real, em um so painel."
+- **Tutoriais:** "Area de membros com videos e guias para dominar o sistema."
+
+### 5. Cores por Categoria
+- Cards de AUTOMACAO: hover com glow verde (`hover:border-green-500/30`, `hover:shadow-[0_0_20px_hsl(142_71%_45%/0.2)]`)
+- Cards de GESTAO: hover com glow azul (`hover:border-blue-500/30`, `hover:shadow-[0_0_20px_hsl(217_91%_60%/0.2)]`)
+- Cards de CRESCIMENTO: hover com glow roxo (`hover:border-purple-500/30`, `hover:shadow-[0_0_20px_hsl(270_70%_60%/0.2)]`)
+- Icones seguem a cor da categoria
+
+### 6. Icones Maiores
+- Todos os icones aumentados de `w-8 h-8` para `w-9 h-9`
+- Cards destacados: `w-10 h-10`
+- Adicionar drop-shadow sutil nos icones na cor da categoria
+
+### 7. CTA Aprimorado
+- Botao maior com `px-10 py-6 text-lg`
+- Subtexto: "Pagamento unico . Acesso imediato . Sem mensalidade"
 
 ---
 
 ## Detalhes Tecnicos
 
-**ComparisonSection.tsx** -- reescrever completamente:
-- Novo array de diferenciais com copy atualizada e flag `featured: true` no primeiro item
-- Renderizacao condicional: card featured com `sm:col-span-2 lg:col-span-2`, padding maior (`p-8`), icone maior, borda verde, glow mais forte
-- Cards normais mantendo `p-6` com hover melhorado (`hover:-translate-y-1 hover:shadow-lg`)
-- Substituir icone `Ban` por `Headphones` ou `RefreshCw` (para Suporte + Atualizacoes)
-- Frase de contraste entre subtitulo e grid: `<p className="text-white/90 font-semibold text-lg max-w-3xl mx-auto mt-4">Enquanto outras plataformas cobram mensalidades eternas, voce <span className="text-green-400">paga uma vez</span> e tem controle total.</p>`
-- Grid com `gap-5 md:gap-6` para melhor espacamento mobile
-- Hover classes: `hover:-translate-y-1 hover:border-green-500/40 hover:shadow-[0_0_25px_hsl(142_71%_45%/0.3)]`
-- Titulos com `text-white font-bold` para contraste
-- CTA mantido verde com glow
+**FeaturesGrid.tsx** -- reescrever completamente:
+- Criar 3 arrays separados (automacao, gestao, crescimento) ou 1 array com campo `category`
+- Cada feature tera: `icon`, `title`, `desc`, `category` ("automacao" | "gestao" | "crescimento"), `highlighted` (boolean)
+- Renderizar 3 blocos com label de categoria acima (badge pequeno com cor correspondente)
+- Cards destacados com classes condicionais para icone maior, glow mais forte e borda visivel
+- Cores dos icones: `text-green-400` (automacao), `text-blue-400` (gestao), `text-purple-400` (crescimento)
+- Hover classes por categoria com shadow customizado
+- Grid mantido em `sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4` dentro de cada categoria
+- Labels de categoria: `<span className="text-xs font-bold uppercase tracking-wider text-green-400 mb-4 block">Automacao</span>`
 
