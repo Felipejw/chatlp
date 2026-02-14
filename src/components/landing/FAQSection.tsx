@@ -35,7 +35,7 @@ const FAQSection = () => (
       </motion.div>
 
       <div className="text-center mt-12">
-        <Button asChild size="lg" className="glow-primary bg-primary hover:bg-primary/90 font-bold px-8">
+        <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
           <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
             Comprar Agora por R$97
           </a>

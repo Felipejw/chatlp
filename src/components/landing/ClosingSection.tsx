@@ -15,7 +15,7 @@ const ClosingSection = () => (
         <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
           Sem mensalidade. Sem limites. Sem depender de terceiros.
         </p>
-        <Button asChild size="lg" className="glow-primary bg-primary hover:bg-primary/90 text-xl px-12 py-7 font-bold animate-glow-pulse">
+        <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 text-xl px-12 py-7 font-bold text-white">
           <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
             Comprar Agora por R$97
           </a>

@@ -1,4 +1,4 @@
-import { Check, Play } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -38,46 +38,45 @@ const HeroSection = () => (
           White Label, Atendentes Ilimitados, Chatbot com IA e Pagamento Único. Sem Mensalidade.
         </p>
 
+        {/* VSL Area */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="max-w-3xl mx-auto mb-10"
+        >
+          <div className="glass rounded-2xl p-3 glow-green-sm">
+            <div className="aspect-video rounded-xl overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/JafFc14Xsco"
+                title="Demonstração Chatbot WhatsApp"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </motion.div>
+
         <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-10">
           {bullets.map((b) => (
             <li key={b} className="flex items-center gap-2 text-sm">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                <Check className="w-3 h-3 text-primary" />
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                <Check className="w-3 h-3 text-green-400" />
               </span>
               {b}
             </li>
           ))}
         </ul>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
-          <Button asChild size="lg" className="glow-primary bg-primary hover:bg-primary/90 text-lg px-8 font-bold animate-glow-pulse">
+        <div className="flex justify-center">
+          <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 text-lg px-8 font-bold text-white">
             <a href="https://chatbotwhatsapp.store/" target="_blank" rel="noopener noreferrer">
               Comprar Agora por R$97
             </a>
           </Button>
-          <Button variant="outline" size="lg" className="border-white/10 hover:bg-white/5 text-lg gap-2">
-            <Play className="w-4 h-4" /> Ver Demonstração
-          </Button>
         </div>
-
-        {/* VSL Area */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-3xl mx-auto"
-        >
-          <div className="glass rounded-2xl p-3 glow-primary-sm">
-            <div className="aspect-video rounded-xl bg-gradient-to-br from-primary/20 via-accent/10 to-transparent flex items-center justify-center">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-primary/30 mx-auto flex items-center justify-center animate-float">
-                  <Play className="w-8 h-8 text-primary" />
-                </div>
-                <p className="text-sm text-muted-foreground">Espaço para VSL</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </motion.div>
     </div>
   </section>
