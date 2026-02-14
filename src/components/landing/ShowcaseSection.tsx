@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import imgWhatsApp from "@/assets/screenshots/WhatsApp.png";
 import imgConexoes from "@/assets/screenshots/Conexoes.png";
@@ -20,8 +21,8 @@ import imgChatbot from "@/assets/screenshots/Chatbot.png";
 import imgDashboard from "@/assets/screenshots/Dashboard.png";
 
 const screenshots = [
-  { src: imgWhatsApp, title: "Atendimento WhatsApp", url: "atendimento", featured: true },
-  { src: imgDisparo, title: "Disparo em Massa", url: "campanhas", featured: true },
+  { src: imgWhatsApp, title: "Atendimento WhatsApp", url: "atendimento" },
+  { src: imgDisparo, title: "Disparo em Massa", url: "campanhas" },
   { src: imgDashboard, title: "Dashboard", url: "dashboard" },
   { src: imgChatbot, title: "Chatbot Builder", url: "chatbot" },
   { src: imgContatos, title: "Gestão de Contatos", url: "contatos" },
@@ -33,9 +34,6 @@ const screenshots = [
   { src: imgSetores, title: "Setores", url: "setores" },
   { src: imgTags, title: "Tags", url: "tags" },
 ];
-
-const featured = screenshots.filter((s) => s.featured);
-const regular = screenshots.filter((s) => !s.featured);
 
 const BrowserFrame = ({
   screenshot,
@@ -50,7 +48,6 @@ const BrowserFrame = ({
     className={`showcase-card group relative rounded-xl border border-white/10 bg-black/40 browser-shadow overflow-hidden cursor-pointer ${className}`}
     onClick={onClick}
   >
-    {/* Title bar */}
     <div className="flex items-center gap-2 px-4 py-2.5 bg-white/5 border-b border-white/5">
       <div className="flex gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
@@ -63,7 +60,6 @@ const BrowserFrame = ({
         </div>
       </div>
     </div>
-    {/* Screenshot */}
     <div className="relative overflow-hidden">
       <img
         src={screenshot.src}
@@ -72,7 +68,6 @@ const BrowserFrame = ({
         loading="lazy"
       />
     </div>
-    {/* Label */}
     <div className="px-4 py-3 bg-black/30 border-t border-white/5">
       <p className="text-sm font-medium text-foreground/90 text-center">{screenshot.title}</p>
     </div>
@@ -81,13 +76,16 @@ const BrowserFrame = ({
 
 const ShowcaseSection = () => {
   const isMobile = useIsMobile();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Mobile carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     containScroll: "trimSnaps",
     active: isMobile,
   });
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -98,10 +96,11 @@ const ShowcaseSection = () => {
     if (!emblaApi) return;
     onSelect();
     emblaApi.on("select", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
+    return () => { emblaApi.off("select", onSelect); };
   }, [emblaApi, onSelect]);
+
+  const prev = () => setActiveIndex((i) => (i === 0 ? screenshots.length - 1 : i - 1));
+  const next = () => setActiveIndex((i) => (i === screenshots.length - 1 ? 0 : i + 1));
 
   return (
     <section id="showcase" className="py-20 relative">
@@ -121,44 +120,60 @@ const ShowcaseSection = () => {
           </p>
         </motion.div>
 
-        {/* Desktop */}
+        {/* Desktop - Premium Carousel */}
         {!isMobile && (
-          <>
-            {/* Featured - 2 large */}
-            <div className="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {featured.map((s, i) => (
+          <div className="max-w-4xl mx-auto">
+            {/* Main print + arrows */}
+            <div className="relative">
+              <button
+                onClick={prev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 z-10 w-12 h-12 rounded-full glass flex items-center justify-center text-foreground/70 hover:text-foreground hover:glow-primary-sm transition-all"
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={24} />
+              </button>
+
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={s.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  key={activeIndex}
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <BrowserFrame
-                    screenshot={s}
-                    onClick={() => setLightboxIndex(screenshots.indexOf(s))}
+                    screenshot={screenshots[activeIndex]}
+                    onClick={() => setLightboxIndex(activeIndex)}
                   />
                 </motion.div>
-              ))}
+              </AnimatePresence>
+
+              <button
+                onClick={next}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 z-10 w-12 h-12 rounded-full glass flex items-center justify-center text-foreground/70 hover:text-foreground hover:glow-primary-sm transition-all"
+                aria-label="Próximo"
+              >
+                <ChevronRight size={24} />
+              </button>
             </div>
-            {/* Regular - grid of remaining */}
-            <div className="grid grid-cols-4 gap-5 max-w-5xl mx-auto mt-5">
-              {regular.map((s, i) => (
-                <motion.div
-                  key={s.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.05 }}
+
+            {/* Thumbnails */}
+            <div className="flex gap-3 justify-center mt-6 overflow-x-auto scrollbar-hide py-2">
+              {screenshots.map((s, i) => (
+                <button
+                  key={s.url}
+                  onClick={() => setActiveIndex(i)}
+                  className={`flex-shrink-0 w-[120px] rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    i === activeIndex
+                      ? "border-primary opacity-100 scale-105"
+                      : "border-transparent opacity-50 hover:opacity-80"
+                  }`}
                 >
-                  <BrowserFrame
-                    screenshot={s}
-                    onClick={() => setLightboxIndex(screenshots.indexOf(s))}
-                  />
-                </motion.div>
+                  <img src={s.src} alt={s.title} className="w-full h-auto block" loading="lazy" />
+                </button>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         {/* Mobile carousel */}
@@ -168,10 +183,7 @@ const ShowcaseSection = () => {
               <div className="flex">
                 {screenshots.map((s, i) => (
                   <div key={s.title} className="flex-[0_0_90%] min-w-0 pl-4 first:ml-4">
-                    <BrowserFrame
-                      screenshot={s}
-                      onClick={() => setLightboxIndex(i)}
-                    />
+                    <BrowserFrame screenshot={s} onClick={() => setLightboxIndex(i)} />
                   </div>
                 ))}
               </div>
