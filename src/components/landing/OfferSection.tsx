@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { Bot, CheckCircle, CheckSquare, Clock, ShoppingCart } from "lucide-react";
+import { CheckCircle, CheckSquare, Clock, ShieldCheck, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const features = [
-  "Gerencie +100 Números de WhatsApp",
-  "Chatbot com I.A. Inclusa (Sem Custo Extra)",
-  "Integração com Instagram e Facebook",
-  "Disparo em Massa para sua lista de contatos",
-  "Adicione +100 Atendentes e crie setores",
-  "Agendamento de Mensagens",
-  "Dashboard de Atendimento em tempo real",
-  "API e Integrações (Typebot, Dialogflow, etc)",
-  "Acesso Vitalício e Atualizações Gratuitas",
+  { text: "Pagamento único vitalício", highlight: true },
+  { text: "WhatsApps ilimitados", highlight: true },
+  { text: "Atendentes ilimitados e crie setores", highlight: true },
+  { text: "Chatbot com I.A. Inclusa (Sem Custo Extra)", highlight: false },
+  { text: "Integração com Instagram e Facebook", highlight: false },
+  { text: "Disparo em Massa para sua lista de contatos", highlight: false },
+  { text: "Agendamento de Mensagens", highlight: false },
+  { text: "Dashboard de Atendimento em tempo real", highlight: false },
+  { text: "API e Integrações (Typebot, Dialogflow, etc)", highlight: false },
 ];
 
 const OfferSection = () => {
@@ -38,18 +38,15 @@ const OfferSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Bot className="w-8 h-8 text-primary" />
-            <h2 className="font-display text-3xl md:text-4xl font-bold">
-              A automação mais completa do WhatsApp
-            </h2>
-          </div>
-          <p className="text-lg text-muted-foreground font-medium">
-            por um único pagamento
+          <h2 className="font-display text-3xl md:text-4xl font-bold">
+            Hoje você paga R$97
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground font-medium mt-1">
+            e elimina mensalidades para sempre
           </p>
           <div className="flex items-center justify-center gap-2 mt-3 text-green-500">
             <CheckCircle className="w-5 h-5" />
-            <span className="text-sm">Tudo que você precisa para automatizar seu atendimento</span>
+            <span className="text-sm">Outras plataformas cobram R$200/mês. Aqui você paga uma única vez.</span>
           </div>
         </motion.div>
 
@@ -64,7 +61,7 @@ const OfferSection = () => {
           <div className="border-2 border-dashed border-green-500/40 rounded-xl p-4 mb-8 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Clock className="w-5 h-5 text-green-500" />
-              <span className="text-sm font-semibold text-green-500">Oferta disponível somente hoje!</span>
+              <span className="text-sm font-semibold text-green-500">Preço promocional por tempo limitado</span>
             </div>
             <p className="text-4xl font-bold font-display tracking-widest text-foreground">
               {String(mins).padStart(2, "0")} : {String(secs).padStart(2, "0")}
@@ -74,16 +71,18 @@ const OfferSection = () => {
           {/* Features */}
           <div className="space-y-3 mb-8">
             {features.map((f) => (
-              <div key={f} className="flex items-center gap-3">
+              <div key={f.text} className="flex items-center gap-3">
                 <CheckSquare className="w-5 h-5 text-green-500 shrink-0" />
-                <span className="text-sm md:text-base text-foreground/90">{f}</span>
+                <span className={`text-sm md:text-base text-foreground/90 ${f.highlight ? "font-semibold" : ""}`}>
+                  {f.text}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Urgency */}
-          <p className="text-center text-sm text-yellow-400/80 font-medium mb-6">
-            ⚠️ Esse preço pode mudar a qualquer momento. Garanta agora!
+          {/* Market comparison */}
+          <p className="text-center text-sm text-muted-foreground mb-2">
+            Plataformas similares: a partir de R$200/mês
           </p>
 
           {/* Pricing */}
@@ -95,12 +94,25 @@ const OfferSection = () => {
           </div>
 
           {/* Badge */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-3">
             <div className="inline-flex items-center gap-2 border border-green-500/30 rounded-full px-4 py-1.5">
               <CheckCircle className="w-4 h-4 text-green-500" />
               <span className="text-sm text-foreground/80">Pagamento único, sem mensalidade.</span>
             </div>
           </div>
+
+          {/* Guarantee */}
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center gap-2 border border-primary/30 rounded-full px-4 py-1.5">
+              <ShieldCheck className="w-4 h-4 text-primary" />
+              <span className="text-sm text-foreground/80">Garantia incondicional de 7 dias</span>
+            </div>
+          </div>
+
+          {/* Social proof */}
+          <p className="text-center text-sm text-muted-foreground mb-5">
+            Mais de 100 empresas já utilizam. Garanta seu acesso agora.
+          </p>
 
           {/* CTA */}
           <Button
