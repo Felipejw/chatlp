@@ -6,7 +6,7 @@ import ShowcaseSection from "@/components/landing/ShowcaseSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import FAQSection from "@/components/landing/FAQSection";
 
-import Footer from "@/components/landing/Footer";
+
 import FloatingElements from "@/components/landing/FloatingElements";
 
 const Index = () => (
@@ -21,7 +21,7 @@ const Index = () => (
       <FAQSection />
       
     </main>
-    <Footer />
+    
     <FloatingElements />
   </div>
 );
