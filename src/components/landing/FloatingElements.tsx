@@ -14,7 +14,7 @@ const FloatingElements = () => (
   <>
     {/* WhatsApp floating button */}
     <a
-      href="https://wa.link/ferh66"
+      href="https://wa.me/5511940777885?text=Ol%C3%A1%2C%20fiquei%20com%20algumas%20d%C3%BAvidas%20antes%20de%20comprar!"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-24 md:bottom-6 right-4 z-50 w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center shadow-lg shadow-green-500/30 transition-all hover:scale-110"
