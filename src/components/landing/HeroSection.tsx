@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const bullets = [
   "WhatsApps ilimitados",
   "Atendentes ilimitados",
+  "Entregue já instalado",
   "Código Fonte Incluso",
   "White Label Completo",
   "IA integrada (Gemini ou OpenAI)",

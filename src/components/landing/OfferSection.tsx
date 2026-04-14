@@ -47,7 +47,7 @@ const OfferSection = () => {
           </p>
           <div className="flex items-center justify-center gap-2 mt-3 text-green-500">
             <CheckCircle className="w-5 h-5" />
-            <span className="text-sm">Outras plataformas cobram R$200/mês. Aqui você paga uma única vez.</span>
+            <span className="text-sm">Outras plataformas cobram R$200/mês. Aqui você paga uma única vez e recebe já instalado.</span>
           </div>
         </motion.div>
 
