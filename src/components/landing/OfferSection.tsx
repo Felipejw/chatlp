@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 const features = [
   { text: "Pagamento único vitalício", highlight: true },
+  { text: "Entregue já instalado no seu servidor", highlight: true },
   { text: "WhatsApps ilimitados", highlight: true },
   { text: "Atendentes ilimitados e crie setores", highlight: true },
   { text: "Chatbot com I.A. Inclusa (Sem Custo Extra)", highlight: false },
@@ -39,14 +40,14 @@ const OfferSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold">
-            Hoje você paga R$97
+            Hoje você paga R$297
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-medium mt-1">
             e elimina mensalidades para sempre
           </p>
           <div className="flex items-center justify-center gap-2 mt-3 text-green-500">
             <CheckCircle className="w-5 h-5" />
-            <span className="text-sm">Outras plataformas cobram R$200/mês. Aqui você paga uma única vez.</span>
+            <span className="text-sm">Outras plataformas cobram R$200/mês. Aqui você paga uma única vez e recebe já instalado.</span>
           </div>
         </motion.div>
 
@@ -87,9 +88,9 @@ const OfferSection = () => {
 
           {/* Pricing */}
           <div className="text-center mb-6">
-            <p className="text-muted-foreground line-through text-lg">De R$197,00</p>
+            <p className="text-muted-foreground line-through text-lg">De R$497,00</p>
             <p className="text-6xl md:text-7xl font-bold text-green-500 mt-1">
-              R$97<span className="text-3xl align-super">,00</span>
+              R$297<span className="text-3xl align-super">,00</span>
             </p>
           </div>
 
@@ -122,7 +123,7 @@ const OfferSection = () => {
           >
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               <ShoppingCart className="w-5 h-5 mr-2" />
-              Comprar Agora por R$97
+              Comprar Agora por R$297
             </a>
           </Button>
         </motion.div>

@@ -19,7 +19,7 @@ type ChatMessage = {
 const chatScript: ChatMessage[] = [
   { role: "bot", content: "Olá! Bem-vindo ao nosso atendimento. Como posso ajudar? 😊", delayAfterPrev: 1000 },
   { role: "client", content: "Qual o preço do plano?", delayAfterPrev: 2000 },
-  { role: "bot", content: "O acesso completo custa R$97 — pagamento único, sem mensalidade!", delayAfterPrev: 2500 },
+  { role: "bot", content: "O acesso completo custa R$297 — pagamento único, já instalado, sem mensalidade!", delayAfterPrev: 2500 },
   { role: "client", content: "Tem suporte incluso?", delayAfterPrev: 2000 },
   { role: "bot", content: "Sim! Suporte por WhatsApp e atualizações gratuitas por 1 ano.", delayAfterPrev: 2500 },
   { role: "client", content: "Quero comprar!", delayAfterPrev: 1500 },

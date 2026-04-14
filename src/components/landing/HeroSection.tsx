@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const bullets = [
   "WhatsApps ilimitados",
   "Atendentes ilimitados",
+  "Entregue já instalado",
   "Código Fonte Incluso",
   "White Label Completo",
   "IA integrada (Gemini ou OpenAI)",
@@ -126,7 +127,7 @@ const HeroSection = () => (
         <div className="flex flex-col items-center gap-2">
           <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 text-lg px-8 font-bold text-white">
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-              Comprar Agora por R$97
+              Comprar Agora por R$297
             </a>
           </Button>
           <span className="text-xs text-muted-foreground">Acesso imediato após o pagamento</span>
