@@ -28,7 +28,7 @@ const FloatingElements = () => (
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden glass border-t border-white/5 px-4 py-3">
       <Button asChild size="lg" className="w-full glow-green bg-green-500 hover:bg-green-600 font-bold text-white h-11">
         <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-          Comprar Agora por R$92
+          Comprar Agora por R$97
         </a>
       </Button>
     </div>
