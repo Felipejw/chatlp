@@ -190,7 +190,7 @@ const FeaturesGrid = () => {
         <div className="text-center mt-14">
           <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-10 py-6 text-lg text-white">
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-              Comprar Agora por R$92
+              Comprar Agora por R$97
             </a>
           </Button>
           <p className="text-muted-foreground text-sm mt-3">Pagamento único • Acesso imediato • Sem mensalidade</p>
