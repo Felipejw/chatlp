@@ -209,7 +209,7 @@ const ShowcaseSection = () => {
             className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white"
           >
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-              Comprar Agora por R$297
+              Comprar Agora por R$92
             </a>
           </Button>
         </div>

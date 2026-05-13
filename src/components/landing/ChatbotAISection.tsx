@@ -19,7 +19,7 @@ type ChatMessage = {
 const chatScript: ChatMessage[] = [
   { role: "bot", content: "Olá! Bem-vindo ao nosso atendimento. Como posso ajudar? 😊", delayAfterPrev: 1000 },
   { role: "client", content: "Qual o preço do plano?", delayAfterPrev: 2000 },
-  { role: "bot", content: "O acesso completo custa R$297 — pagamento único, já instalado, sem mensalidade!", delayAfterPrev: 2500 },
+  { role: "bot", content: "O acesso completo custa R$92 — pagamento único, já instalado, sem mensalidade!", delayAfterPrev: 2500 },
   { role: "client", content: "Tem suporte incluso?", delayAfterPrev: 2000 },
   { role: "bot", content: "Sim! Suporte por WhatsApp e atualizações gratuitas por 1 ano.", delayAfterPrev: 2500 },
   { role: "client", content: "Quero comprar!", delayAfterPrev: 1500 },
@@ -281,7 +281,7 @@ const ChatbotAISection = () => {
             <div className="mt-10 text-center">
               <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
                 <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-                  Comprar Agora por R$97
+                  Comprar Agora por R$92
                 </a>
               </Button>
             </div>

@@ -40,7 +40,7 @@ const OfferSection = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold">
-            Hoje você paga R$297
+            Hoje você paga R$92
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-medium mt-1">
             e elimina mensalidades para sempre
@@ -90,7 +90,7 @@ const OfferSection = () => {
           <div className="text-center mb-6">
             <p className="text-muted-foreground line-through text-lg">De R$497,00</p>
             <p className="text-6xl md:text-7xl font-bold text-green-500 mt-1">
-              R$297<span className="text-3xl align-super">,00</span>
+              R$92<span className="text-3xl align-super">,00</span>
             </p>
           </div>
 
@@ -123,7 +123,7 @@ const OfferSection = () => {
           >
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
               <ShoppingCart className="w-5 h-5 mr-2" />
-              Comprar Agora por R$297
+              Comprar Agora por R$92
             </a>
           </Button>
         </motion.div>
