@@ -12,7 +12,7 @@ const testimonials = [
     role: "CEO",
     company: "AutoPeças Express",
     initials: "RM",
-    text: "Eu pagava R$400 por mês em outra plataforma. Hoje paguei R$297 uma única vez, já veio instalado, e economizei mais de R$4.000 no ano. Tenho controle total do meu atendimento.",
+    text: "Eu pagava R$400 por mês em outra plataforma. Hoje paguei R$92 uma única vez, já veio instalado, e economizei mais de R$4.000 no ano. Tenho controle total do meu atendimento.",
     featured: true,
   },
   {
@@ -132,7 +132,7 @@ const TestimonialsSection = () => {
         <div className="text-center mt-12">
           <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
             <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-              Comprar Agora por R$297
+              Comprar Agora por R$92
             </a>
           </Button>
         </div>

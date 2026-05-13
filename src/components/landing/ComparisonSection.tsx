@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const diferenciais = [
-  { icon: CreditCard, title: "Pague Uma Vez. Use Para Sempre.", desc: "Enquanto outras plataformas cobram R$200 ou mais todos os meses, você investe R$297 uma única vez e recebe o sistema já instalado.", featured: true },
+  { icon: CreditCard, title: "Pague Uma Vez. Use Para Sempre.", desc: "Enquanto outras plataformas cobram R$200 ou mais todos os meses, você investe R$92 uma única vez e recebe o sistema já instalado.", featured: true },
   { icon: Users, title: "Escale Sem Pagar Mais", desc: "Adicione 10, 50 ou 100 atendentes. Seus concorrentes pagam por cada usuário.", featured: false },
   { icon: Palette, title: "Sua Marca, Seu Negócio", desc: "Remova nossa marca, use a sua e revenda como produto próprio. Crie uma nova fonte de receita.", featured: false },
   { icon: FileCode, title: "Controle Total na Sua Mão", desc: "Hospede onde quiser, customize como quiser. Sem depender de ninguém.", featured: false },
@@ -59,7 +59,7 @@ const ComparisonSection = () => (
       <div className="text-center mt-12">
         <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-10 py-6 text-lg text-white">
           <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-            Comprar Agora por R$297
+            Comprar Agora por R$92
           </a>
         </Button>
         <p className="text-muted-foreground text-sm mt-3">Pagamento único • Acesso imediato • Sem mensalidade</p>

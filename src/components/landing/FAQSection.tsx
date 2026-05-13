@@ -4,7 +4,7 @@ import { ShieldCheck, Lock, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
 const faqs = [
-  { q: "É pagamento único mesmo?", a: "Sim. Você paga apenas R$297 uma única vez e o sistema é seu, já instalado. Sem mensalidade, sem taxa recorrente e sem surpresas futuras." },
+  { q: "É pagamento único mesmo?", a: "Sim. Você paga apenas R$92 uma única vez e o sistema é seu, já instalado. Sem mensalidade, sem taxa recorrente e sem surpresas futuras." },
   { q: "Preciso pagar mensalidade?", a: "Não. Diferente de outras plataformas que cobram mensalmente, aqui você paga uma única vez e tem acesso vitalício." },
   { q: "Funciona com quantos WhatsApps?", a: "Você pode conectar múltiplos números e adicionar quantos atendentes precisar. Sem cobrança por usuário." },
   { q: "Preciso saber programar?", a: "Não. O sistema possui construtor visual drag-and-drop. Você monta fluxos sem escrever código." },
@@ -53,7 +53,7 @@ const FAQSection = () => (
       <div className="text-center">
         <Button asChild size="lg" className="glow-green bg-green-500 hover:bg-green-600 font-bold px-8 text-white">
           <a href="https://pay.chatbotwhatsapp.store?s=chatbot" target="_blank" rel="noopener noreferrer">
-            Comprar Agora por R$297
+            Comprar Agora por R$92
           </a>
         </Button>
       </div>
